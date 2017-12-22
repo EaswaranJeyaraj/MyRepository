@@ -1,0 +1,213 @@
+/usr/lib/sqoop/bin
+
+Official Document: sqoop.apache.org
+
+
+
+sqoop:
+=======
+Command line interface to transfer data from relational data base to hadoop HDFS & reverse.
+
+SQL to hadoop & Hadoop to SQL.
+
+RDBMS <--> sqoop tool (import/export)  <--> hadoop 
+
+steps:
+a) sqoop send request to RDBS & get the metadata information.
+b) generate .java classes (since internally using jdbc api to generate data)
+c) package the compiled classes & generate jars.
+
+
+sqoop import : 
+import individual tables from RDBMS to HDFS. Each row is treated a record in HDFS. all the records will be stored a text file / binary data.
+
+export:
+Export set of files from hdfs to RDBMS. set of files wil be given as input to sqoop & parse based on the delimited given by the user.
+
+
+installation :
+sqoop,mysql connector.
+
+
+Rule_details_tbl
+
+		   
+sqoop eval \
+		--connect "jdbc:sqlserver://10.30.2.117;databaseName=MarketingAutomation;instanceName=development" \
+           --username nohuman  \
+           --password nohumansql \
+           --driver   com.microsoft.sqlserver.jdbc.SQLServerDriver \
+           --query "select * from Persons where personId in (11,12,13);"
+
+
+sqoop import --connect "jdbc:sqlserver://10.30.2.117;databaseName=MarketingAutomation;instanceName=development" \
+       --username nohuman  \
+       --password nohumansql \
+       --driver   com.microsoft.sqlserver.jdbc.SQLServerDriver \
+       --table    "dbo.Persons" \
+       --target-dir  "/my_sqoop2/" \
+	   -m 1
+	   
+
+with where:
+===========
+	   
+sqoop import --connect "jdbc:sqlserver://10.30.2.117;databaseName=MarketingAutomation;instanceName=development" \
+       --username nohuman  \
+       --password nohumansql \
+       --driver   com.microsoft.sqlserver.jdbc.SQLServerDriver \
+       --table    "dbo.Persons" \
+       --target-dir  "/my_sqoop3/" \
+	   --where "personid in (11,12) " \
+	   -m 1
+	   
+	       		
+Export:
+=======
+		
+sqoop export --connect "jdbc:sqlserver://10.30.2.117;databaseName=MarketingAutomation;instanceName=development" \
+       --username nohuman  \
+       --password nohumansql \
+       --driver   com.microsoft.sqlserver.jdbc.SQLServerDriver \
+       --table    "dbo.Persons" \
+       --export-dir  "/my_sqoop2/part-m-00000" 
+
+
+Create Job:
+===========
+
+sqoop job --create myjob -- import --connect "jdbc:sqlserver://10.30.2.117;databaseName=MarketingAutomation;instanceName=development" \
+    --table persons \
+	--username nohuman  \
+    --password nohumansql \
+	--target-dir  "/my_sqoop/" 
+
+
+list jobs:
+sqoop job --list
+
+view :
+sqoop job --show myjob	
+	   
+Execute Job:
+sqoop job --exec myjob2 -- --username nohuman -P
+
+
+CodeGen:
+=======
+to generate DAO class based on table schema structure.
+
+sqoop codegen --connect "jdbc:sqlserver://10.30.2.117;databaseName=MarketingAutomation;instanceName=development" \
+       --username nohuman  \
+       --password nohumansql \
+       --table    Persons       
+	   
+
+===========================================================================================================		  
+		
+ CREATE TABLE Persons (
+   PersonID int,
+    LastName varchar(255),
+    FirstName varchar(255),
+    Address varchar(255),
+    City varchar(255) ,	
+	primary key (PersonID)
+);		
+insert into persons values(11,'first','second','address1','chennai')		  
+
+insert into persons values(12,'first2','second2','address2','chennai2')		  
+
+insert into persons values(13,'first3','second3','address3','chennai3')		  
+
+===========================================================================================================
+
+Incremental Import:
+==================
+
+sqoop import --connect "jdbc:sqlserver://10.30.2.117;databaseName=MarketingAutomation;instanceName=development" \
+       --username nohuman  \
+	   --password nohumansql \
+       --driver   com.microsoft.sqlserver.jdbc.SQLServerDriver \
+       --table    Persons \
+       --target-dir  "/my_sqoop_incrment/" \
+	   --incremental append --check-column personid --last-value 16
+	   
+	   
+	Note: for each new record , new file will be created.   
+	
+	
+	
+CREATE TABLE IF NOT EXISTS Persons (
+PersonID INTEGER NOT NULL,
+LastName varchar(255) NOT NULL,
+FirstName varchar(255) NOT NULL,
+Address varchar(255) NOT NULL,
+City varchar(255) NOT NULL,
+last_modified 	DATE  NOT NULL,
+CONSTRAINT PK PRIMARY KEY(PersonID)
+);
+	
+	
+	CREATE TABLE IF NOT EXISTS WEB_STAT (
+     HOST CHAR(2) NOT NULL,
+     DOMAIN VARCHAR NOT NULL,
+     FEATURE VARCHAR NOT NULL,
+     DATE DATE NOT NULL,
+     USAGE.CORE BIGINT,
+     USAGE.DB BIGINT,
+     STATS.ACTIVE_VISITOR INTEGER
+     CONSTRAINT PK PRIMARY KEY (HOST, DOMAIN, FEATURE, DATE)
+);
+
+
+
+
+Hbase Import:
+=============
+Create table in hbase using phoenix:
+
+	CREATE TABLE IF NOT EXISTS PERSONS (
+     PersonID INTEGER NOT NULL,
+     LastName VARCHAR,
+     FirstName VARCHAR,
+     Address VARCHAR,City VARCHAR,
+     last_modified DATE
+     CONSTRAINT PK PRIMARY KEY (PersonID));	
+	 
+With Primary incremental:
+=========================	 
+sqoop import --connect "jdbc:sqlserver://10.30.2.117;databaseName=MarketingAutomation;instanceName=development" \
+       --username nohuman \
+       --password nohumansql \
+       --driver   com.microsoft.sqlserver.jdbc.SQLServerDriver \
+       --table    "dbo.Persons" \
+	  --hbase-table PERSONS \
+	  --column-family 0 \
+	  --hbase-row-key PersonID \
+	  --incremental append --check-column personid --last-value 18 \
+	   -m 1
+
+
+with last updated incrmental mode:
+==================================
+sqoop import --connect "jdbc:sqlserver://10.30.2.117;databaseName=MarketingAutomation;instanceName=development" \
+       --username nohuman \
+       --password nohumansql \
+       --driver   com.microsoft.sqlserver.jdbc.SQLServerDriver \
+       --table    "dbo.Persons" \
+	  --hbase-table PERSONS \
+	  --column-family 0 \
+	  --hbase-row-key PersonID \
+	   --incremental append --check-column last_modified --last-value "2017-12-19 09:43:16.060" \
+	   -m 1	   
+
+	   
+Script execution:
+
+create script (with .sh extension or .txt) & put any path.
+
+
+goto bin > /home/hadoop/script.sh	   
+	   
+=====================================================================================================================
+

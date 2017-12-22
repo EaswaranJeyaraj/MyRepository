@@ -1,0 +1,372 @@
+a) Map reduce configuration about which map reduce to be consider to split data.
+b) View all the details in browser.
+c) AWS
+e) collect version details of all
+f) Git repository creation.
+
+--------------------------------------------
+HDFS : Hadoop Distributed File System - Files will be broken into blocks & stored in node over the distributed architecture.
+Yarn : Yet another resource navigator : used for scheduling & managing cluster.
+Map reduce : helps java programmers for parallel computation of data using key/value. map task converts data into data set. which can be computed in key/value pair.
+
+mapper : The mapper processes the data and creates several small chunks of data
+
+
+SSH installation :
+used to interact with master / slaves computer without promting for username & password. Before create hadoop users in master & slaves.
+# useradd hadoop  
+# passwd Hadoop  
+
+To map the nodes.. open the host file and add the ip address along with the host name.
+190.12.1.114    hadoop-master  
+190.12.1.121    hadoop-salve-one  
+190.12.1.143   hadoop-slave-two  
+
+setup SSH key in every node.. so that they can communicate each other without password. commmand below.
+
+# su hadoop   
+$ ssh-keygen -t rsa   
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub tutorialspoint@hadoop-master   
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub hadoop_tp1@hadoop-slave-1   
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub hadoop_tp2@hadoop-slave-2   
+$ chmod 0600 ~/.ssh/authorized_keys   
+$ exit  
+
+
+HDFS concept;
+data is distributed in several machine.
+
+blocks : minimum amount of data that it can read/write. max 128 mb. hdfs broken into block sized chunks, which are stored as an indepentent units.
+
+name node: HDFS works as master/worker concept. name node act as a manager /controller. it knows the status & metadata(permission,names,location) of the files.
+metadata smaller info... stored in name node memory & allowing faster access of data.
+
+data node: store / retrieve blocks by client or name node.
+
+HDFS commands:
+==============
+$ hadoop fs -mkdir users/test
+$ hadoop fs -CopyfromLocal user/desktop/data.txt users/test 
+$ hadoop fs -CopyToLocal user/desktop/data.txt users/test 
+moveFrom
+MoveTo
+remr (remove)
+
+Hbase: Sorted Map Data built on hadoop. column oriented and horizandal scalable. hbase datamodel,read,write
+provides API to interact with any programming language that provides read/write.
+
+It doesn't care about datatypes(storing an integer in one row and a string in another for the same column).
+
+Hbase table model:
+sorted by rowkey:
+
+rowkey,[name,email,password...] --> cells.
+each celss has multiple version,modified data/time.
+
+hbase commands.
+create 'table1', 'colf'  
+list 'table1'  
+ put 'table1', 'row1', 'colf:a', 'value1'  
+ put 'table1', 'row1', 'colf:b', 'value2'  
+ put 'table1', 'row2', 'colf:a', 'value3'  
+ scan 'table1'  
+ get 'table1', 'row1'
+
+ Google algorithm :
+ MapReduce : divides the task into small parts & assign these parts into many computers connected over the n/w.
+ & collect these results to form the final result.
+ 
+ mapp stage : input file passed to the mapper function line by line. Mapper  process the data & create small chunks of data
+ Reduce stage : combination of shuffle & reduce. 
+ 
+ Hadoop runs applications using the MapReduce algorithm
+ Hadoop application is capable of running on cluster of computers.
+ Hadoop designed to scale up from single server to 1000 of machines. each offering local computation & storing.
+ 
+ Hadoop modules.:
+ a) hadoop common : Java libraries to start  hadoop
+ b) Yarn : scheduling & managing resources.
+ c) HDFS : hadoop Distributed File System (data can be distributed in several machine.)
+ d) Map Reduce : yarn based system for parallel processing of large data sets.
+		Application which is processing huge amount of data on parallel on large clusters (1000 of nodes)
+      map task : this task takes input data & converts into set of datas (key/value pair).
+	  Reduce task : this task takes output from map task (word count algorithm)
+ 
+ Map Reduce : MapReduce is a programming model designed for processing huge volume of data in parallel 
+ by dividing the work into a set of independent tasks.
+ we need to put business logic in the way MapReduce works and rest things will be taken care by the framework
+ 
+ Map output : intermediate out put (saved in local disk)
+ 
+ Cluster : physical grouping of server
+Oracle virtual box manager.
+================================
+spark :  Bye pass the mapreduce.
+lightning-fast cluster computing technology
+
+spark --> hdfs  : standalone
+spark --> yarn --> hdfs : yarn 
+spark --> mapreduce --> hdfs  (SIMR)
+================================
+
+storage (HDFS)         + processing (Map reduce) : Yarn
+Name node , data node.        resouce manager, node manager, 
+
+hadoop1 : map reduce
+yarn (only do resource allocation manager): map reduce version 2. 
+
+map reduce run on top of yarn.
+
+
+storage (hadoop HDFS) + processing (hadoop Map reduce)
+
+block will be created in parallel & Replication will happened in sequential order. .
+
+hadoop commands.
+hadoop version
+hadoop fsck / : to get the health of particular directory.
+replication size configured in hdfs-site.xml.
+
+hdfs dfs -ls /
+
+vi welcome  : to create file.
+cat welcome : to view the file.
+hdfs dfs put welcome /
+hdfs dfs -ls 
+hdfs dfs -cat /welcome 
+hdfs dfs -help 
+
+map reduce :
+
+input -> spliting --> mapping --> shuffling --> reducing (sorting) --> output (list)
+      --> words   --> key/value ->          --> word count         --> word: count    
+
+	 Map : spliting + mapping
+     reduce : shuffling + reducing.
+	 
+	  
+	  
+ processing the data faster. : It means that instead of moving data from different nodes to a single master node for processing, the processing logic is sent to the nodes where data is stored so as that each node can process a part of data in parallel. Finally, all of the intermediary output produced by each node is merged together and the final response is sent back to the client.
+ 
+ Name Node : (master daemon) maintain and manage the data nodes. metadata, location of blocks stored, privileges, receives heart beat and block from all the data nodes.
+ 
+ data node : (slave daemon) 
+ a) actual data stored.
+ b) serving read/write based on the client request.
+ c) based the decision of name nodes, creating/deleting /replicating blocks.
+ d) send heart beats to name node.
+ 
+ 
+ Yarn 
+ 
+ Resorce Manager:
+ a) cluster level component (one for each cluster) running on master.
+ b) manages resources/scheduling on top of yarn.
+ c) two components : i) scheduler (allocating resources) ii) application manager (accepting job submission)
+ d) keep track of heart beat.
+ 
+ Node manager:
+ a) node level (one for each node)
+ b) managing node & resource utilization in each container
+ c) keep track of node health , continuously communicate with resource manager.
+ 
+ unstructerd/semi strucuted data will be uploaded using flume.
+ structed data will be uploaded using sqoop
+ 
+ 
+ sqoop : 
+ Command line interface to transfer the data between RDBMS and hadoop.
+ 
+ RDBMS --> sqoop tool ( mapreduce) --> Hadoop (hbase)
+ 
+ 
+ 
+ 
+ https://www.edureka.co/blog/hadoop-tutorial/#
+ 
+  Restliant , data distribution... Kafka  API/ scalla. 
+  spark client..
+  
+  SSL 
+  
+	Structured data : Relational data.
+	Semi Structured data : XML data.
+	Unstructured data : Word, PDF, Text, Media Logs
+  
+  
+ 
+ 
+ Spark Stream : processing of live streaming data.
+ 
+(weblog) or (stocks pricess) --> kafka --> streaming (batching) --> HDFS
+
+streaming analytics ex : Fraud detection (same debit card is been used in india and other countries at the same time. or few hours gap), sentiment analytics (which party , positive / negative comments), website analytics (which country.)
+
+streaming will be done by spark engine using map, reduce,window,join function.
+
+RDD : Resilient Distributed Datasets : fundamental data structure of spark. Immutable collection of object. It have any type of classes (java,python,scala..)
+2 ways to create RDD --> 
+a) parallelizing 
+b) referencing a dataset 
+
+spark engine (spark streaming engine (batche of input data (RDD)) + spark engine (output batches (RDD)
+
+
+Dstream (Discretized Stream) : sequence of RDD.
+=======
+batch interval : interval time for creating single batch.
+0-2 seconds or 2-4 seconds.
+if no data 
+
+
+avoid hdfs:
+1. low letency access ( 	fetching single record from million record in a second)
+2. lof of small files (name node (RAM) will be ocuumpied with many entries)
+3. parellel write : HDFS write a file in single place.. & the same file can be written by other parallel process.
+ 
+
+Move the hadoop production data from production to UAT
+hadoop listcp http://<host>:<port>/filesys   <destination url>
+internally use mapreduce
+
+-----------------------------------------
+scala : 2.12.1
+
+Scala is an object-oriented and functional programming language.
+everything is an object whether it is a function or a number. It does not have concept of primitive data
+
+there are no static variables or methods
+Singleton object is declared by using object instead of class keyword
+
+
+
+a) mapreduce:
+b) RDD
+c) 
+
+
+
+hadoop installation in centos:
+https://www.tecmint.com/install-configure-apache-hadoop-centos-7/1/
+https://www.tecmint.com/install-configure-apache-hadoop-centos-7/2/
+https://www.tecmint.com/install-configure-apache-hadoop-centos-7/3/
+
+
+
+
+Hadoop in standalone.
+a) Centos Version : 7
+b) JDK version 1.8
+c) Hadoop version 
+d) 
+
+
+JDK installation commmand : 
+sudo yum install -y java-1.8.0-openjdk
+
+
+
+
+Solution
+=========
+Use case
+
+An e-commerce site XYZ (having 100 million users) wants to offer a gift voucher of 100$ to its top 10 customers who have spent the most in the previous year.Moreover, they want to find the buying trend of these customers so that company can suggest more items related to them.
+
+Issues
+
+Huge amount of unstructured data which needs to be stored, processed and analyzed.
+
+Storage: This huge amount of data, Hadoop uses HDFS (Hadoop Distributed File System) which uses commodity hardware to form clusters and store data in a distributed fashion. It works on Write once, read many times principle.
+
+Processing: Map Reduce paradigm is applied to data distributed over network to find the required output.
+
+Analyze: Pig, Hive can be used to analyze the data.
+
+Cost: Hadoop is open source so the cost is no more an issue.
+
+hadoop is not OLAP (online Analytical processing)
+
+hadoop modules : 
+hdfs : files will be broken to blocks & stored in node over the distributed architecture.
+Yarn : job scheduling & managing cluster.
+Mapreduce : this is the framework used for java developer for parallel computation on data using key/value pair.
+hadoop common : java libraries used to start hadoop.
+
+
+Hadoop installation :
+a) Java instllation
+b) ssh installation : used to interact with master / slave node without prompting for user id /password.
+
+
+
+
+Jani's system IP : 
+192.168.12.46
+root
+mundio123
+
+macine details : hostnamectl 
+
+RAM speed:
+dmidecode --type 17
+
+java installation path:
+type -path java
+
+
+
+export JAVA_HOME = /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.151-1.b12.el7_4.x86_64
+
+http://192.168.12.46:50070/
+http://192.168.12.46:8088/cluster
+http://192.168.12.46:8042/node
+
+
+21. To stop all hadoop instances run the below commands:
+
+installation path :
+/opt/hadoop
+
+configuration file:
+/opt/hadoop/etc/hadoop
+
+to start /stop services.
+/opt/hadoop/sbin
+$ stop-yarn.sh
+$ stop-dfs.sh
+
+stops:
+stop-dfs.sh
+stop-yarn.sh
+
+jps : to get the list of running services.
+
+commands:
+vi index1.txt
+<enter statement>
+esc + :wq
+
+hdfs dfs -mkdir /my_storage
+hdfs dfs -put index1.txt /my_storage
+
+hdfs dfs -ls /my_storage/
+hdfs dfs -cat /my_storage/index1.txt
+hdfs dfs -help
+
+ hadoop jar MapReduce.jar MarketRatings /my_storage/farm-market-data.csv /home/hadoop/output2
+ 
+ hadoop jar hbase.jar CreateTable 
+ 
+ hdfs://192.168.12.46:9000/home/hadoop/output
+ 
+ 
+ 
+ Map Reduce:
+ master : Jobtracker
+ Slave : TaskTracker.
+ 
+ 
+
+
+	  

@@ -1,0 +1,341 @@
+[subscriber]
+[bundle_plan]
+[bundle_plan_package]
+[mvno_bundle_plan]
+[mvno_account]
+[account]
+[account_package]
+[packages]
+[package_template]
+[SIM]
+[bundle_log]
+[topup_log]
+
+
+[subscriber]
+-------------
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table subscriber --hbase-table subscriber --hbase-create-table --column-family cfscrb --hbase-row-key subscriberid -m 1
+
+
+
+[subscriber_line]
+-------------
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table subscriber_line --hbase-table subscriberline --hbase-create-table --column-family cfscbline --hbase-row-key subscriberid -m 1
+
+
+[bundle_plan]
+-------------
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table bundle_plan --hbase-table bundleplan --hbase-create-table --column-family cfbp --hbase-row-key bundleid -m 1
+
+
+
+[bundle_plan_package]
+----------------------
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table bundle_plan_package --hbase-table bundleplanpackage --hbase-create-table --column-family cfbpp --hbase-row-key bundleid,packageid -m 1
+
+
+[mvno_bundle_plan]
+------------------
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table mvno_bundle_plan --hbase-table mvnobundleplan --hbase-create-table --column-family cfmvbp --hbase-row-key lastupdate -m 1
+
+
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table mvno_bundle_plan --hbase-table mvnobundleplan --query "select concat(iccid,bundleid) as mvbpid,iccid,mobileno,bundleid,status,joindate,stopdate,lastupdate,paymode,renewal_mode,renewal_delay,startdate,enddate,updateby,datemode,
+payment_flag,payment_delay,last_pay,due_pay,autostop_date,override_tariffclass_actdate,ctr,ctr_startdate,ctr_enddate,firstusage_date from [esp_mcz].[dbo].[mvno_bundle_plan] where mobileno is not null AND \$CONDITIONS" --hbase-create-table --column-family cfmvbp --hbase-row-key mvbpid -m 1
+
+
+[mvno_account]
+--------------sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table mvno_account --hbase-table mvnoaccount --hbase-create-table --column-family cfmvaccount --hbase-row-key iccid -m 1
+
+
+[account]
+----------
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table account --hbase-table account --hbase-create-table --column-family cfaccount --hbase-row-key startdate -m 1
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table account --hbase-table account --hbase-create-table --column-family cfaccount --hbase-row-key startdate -m 1
+
+
+[account_package]
+-----------------
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table account_package --hbase-table accountpackage --hbase-create-table --column-family cfaccpkg --hbase-row-key lastupdate -m 1
+
+
+[packages]
+----------
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table packages --hbase-table packages --hbase-create-table --column-family cfpkg --hbase-row-key package_id -m 1
+
+
+[package_template]
+------------------
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table package_template --hbase-table packagetemplate --hbase-create-table --column-family cfpkgtpl --hbase-row-key packageid,sitecode -m 1
+
+
+[SIM]
+-----
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table SIM --hbase-table sim --hbase-create-table --column-family cfsim --hbase-row-key iccid -m 1
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table SIM --hbase-table sim --hbase-create-table --column-family cfsim --split-by iccid -m 1
+
+
+
+[bundle_log]
+------------
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table bundle_log --hbase-table bundlelog --hbase-create-table --column-family cfbndlog --hbase-row-key logid -m 1
+
+
+[topup_log]
+-----------
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table topup_log --hbase-table topuplog --hbase-create-table --column-family cftplog --hbase-row-key topuplogid -m 1
+
+
+13th July 2017 ::
+*****************
+
+[reward_log]
+-----------
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table reward_log --hbase-table rewardlog --hbase-create-table --column-family cfrdlog --hbase-row-key rewardlogid -m 1
+
+*******************
+
+
+INCREMENTAL SCRIPTS
+--------------------
+
+[subscriber]
+-------------
+
+SQOOP HBASE INCREMENTAL IMPORT
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table subscriber --incremental append --target-dir /user/devuser2/subscriber/ --check-column subscriberid --last-value 29920 -m 1
+
+
+SQOOP JOB CREATION FOR HBASE INCREMENT
+
+sqoop job --create incsubscriber -- import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table subscriber --incremental append --check-column subscriberid --last-value 29920 --target-dir /user/devuser2/subscriber/ -m 1
+
+
+[subscriber_line]
+-------------
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table subscriber_line --hbase-table subscriberline --hbase-create-table --column-family cfscbline --hbase-row-key subscriberid -m 1
+
+
+SQOOP HBASE INCREMENTAL IMPORT
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table subscriber_line --incremental append --check-column subscriberid --last-value 29546 --target-dir /user/devuser2/subscriber_line -m 1
+
+
+SQOOP JOB CREATION FOR HBASE INCREMENT
+
+sqoop job --create incsubscriberline -- import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table subscriber_line --incremental append --check-column subscriberid --last-value 29546 --target-dir /user/devuser2/subscriber_line -m 1
+
+
+
+[bundle_plan]
+-------------
+
+SQOOP HBASE INCREMENTAL IMPORT
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table bundle_plan --incremental append --check-column bundleid --last-value 18 -m --target-dir /user/devuser2/bundle_plan/ 1
+
+
+SQOOP JOB CREATION FOR HBASE INCREMENT
+
+sqoop job --create incbundleplan -- import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table bundle_plan --incremental append --check-column bundleid --last-value 18 --target-dir /user/devuser2/bundle_plan/ -m 1
+
+
+
+[bundle_plan_package]
+----------------------
+
+
+SQOOP HBASE INCREMENTAL IMPORT
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table bundle_plan_package --incremental append --check-column bundleid,packageid --last-value 18,49 -m 1
+
+
+SQOOP JOB CREATION FOR HBASE INCREMENT
+
+sqoop job --create incbundleplanpkg -- import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table bundle_plan_package --incremental append --check-column bundleid,packageid --last-value 18,49 -m 1
+
+
+[mvno_bundle_plan]
+------------------
+
+
+SQOOP HBASE INCREMENTAL IMPORT
+
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table mvno_bundle_plan --incremental append --check-column lastupdate --last-value "2017-06-12 23:05:10.030" -m 1
+
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table mvno_bundle_plan --incremental lastmodified --check-column lastupdate --last-value "2017-06-12 23:05:10.03" --target-dir /user/devuser2/mvno_bundle_plan/ -m 1
+
+
+
+/user/devuser2/mvno_bundle_plan/
+
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --query "select concat(iccid,bundleid) as mvbpid,iccid,mobileno,bundleid,status,joindate,stopdate,lastupdate,paymode,renewal_mode,renewal_delay,startdate,enddate,updateby,datemode,
+payment_flag,payment_delay,last_pay,due_pay,autostop_date,override_tariffclass_actdate,ctr,ctr_startdate,ctr_enddate,firstusage_date from [esp_mcz].[dbo].[mvno_bundle_plan] where mobileno is not null AND \$CONDITIONS"  --incremental append --check-column mvbpid --last-value 89420060001012607752 --target-dir /user/hbase/increment/mvbp -m 1
+
+
+
+
+SQOOP JOB CREATION FOR HBASE INCREMENT
+
+sqoop job --create incmvnobndplan -- import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table mvno_bundle_plan --incremental append --check-column lastupdate --last-value "2017-06-12 23:05:10.030" -m 1
+
+
+
+[mvno_account]
+--------------
+
+
+SQOOP HBASE INCREMENTAL IMPORT
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table mvno_account --incremental append --check-column iccid --last-value 8942006000101351996 -m 1
+
+
+SQOOP JOB CREATION FOR HBASE INCREMENT
+
+sqoop job --create incmvnoaccount -- import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table mvno_account --incremental append --check-column iccid --last-value 8942006000101351996 -m 1
+
+
+
+[account]
+----------
+
+
+SQOOP HBASE INCREMENTAL IMPORT
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table account --incremental append --check-column startdate --last-value "2017-06-12 23:04:52.007" -m 1
+
+
+SQOOP JOB CREATION FOR HBASE INCREMENT
+
+sqoop job --create incaccount -- import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table account --incremental append --check-column startdate --last-value "2017-06-12 23:04:52.007" -m 1
+
+
+[account_package]
+-----------------
+
+
+SQOOP HBASE INCREMENTAL IMPORT
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table account_package --incremental append --check-column lastupdate --last-value "2017-06-12 23:05:10.037" -m 1
+
+
+SQOOP JOB CREATION FOR HBASE INCREMENT
+
+sqoop job --create incaccpkg -- import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table account_package --incremental append --check-column lastupdate --last-value "2017-06-12 23:05:10.037" -m 1
+
+
+
+
+[packages]
+----------
+
+
+SQOOP HBASE INCREMENTAL IMPORT
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table packages --incremental append --check-column package_id --last-value 49 --target-dir /user/devuser2/packages -m 1
+
+
+SQOOP JOB CREATION FOR HBASE INCREMENT
+
+sqoop job --create incpackage -- import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table packages --incremental append --check-column package_id --last-value 49 --target-dir /user/devuser2/packages -m 1
+
+
+
+
+[package_template]
+------------------
+
+
+SQOOP HBASE INCREMENTAL IMPORT
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table package_template --incremental append --check-column packageid,sitecode --last-value 49,MCZ -m 1
+
+
+SQOOP JOB CREATION FOR HBASE INCREMENT
+
+sqoop job --create incpkgtpl -- import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table package_template --incremental append --check-column packageid,sitecode --last-value 49,MCZ -m 1
+
+
+
+[SIM]
+-----
+
+SQOOP HBASE INCREMENTAL IMPORT
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table SIM --incremental append --check-column iccid --last-value 8942006000101351996 -m 1
+
+
+SQOOP JOB CREATION FOR HBASE INCREMENT
+
+sqoop job --create incsim -- import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table SIM --incremental append --check-column iccid --last-value 8942006000101351996 -m 1
+
+
+
+[bundle_log]
+------------
+
+SQOOP HBASE INCREMENTAL IMPORT
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table bundle_log --incremental append --check-column logid --last-value 19162 --target-dir /user/devuser2/bundle_log/ -m 1
+
+
+SQOOP JOB CREATION FOR HBASE INCREMENT
+
+sqoop job --create incbndlog -- import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table bundle_log --incremental append --check-column logid --last-value 19162 --target-dir /user/devuser2/bundle_log/ -m 1
+
+
+
+
+[topup_log]
+-----------
+
+
+SQOOP HBASE INCREMENTAL IMPORT
+
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table topup_log --incremental append --hbase-table topuplog --column-family cftplog --check-column topuplogid --last-value 24446 -m 1
+
+
+
+
+SQOOP JOB CREATION FOR HBASE INCREMENT
+
+sqoop job --create inctopuplog -- import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table topup_log --incremental append --hbase-table topuplog --column-family cftplog --check-column topuplogid --last-value 24446 -m 1
+
+
+
+SQOOP COMMANDS
+---------------
+
+To List the Sqoop Jobs
+-----------------------
+
+sqoop job --list
+
+
+To Execute Sqoop Jobs
+----------------------
+
+sqoop job -exec incbundleplan
+
+

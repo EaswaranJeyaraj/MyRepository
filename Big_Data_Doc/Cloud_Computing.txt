@@ -1,0 +1,79 @@
+Clound Computing:
+=================
+Internet based computing services.
+
+a) releas resources on demand.
+b) resource scalle up/down automtically based on load
+c) accessible through n/w with proper security.
+d) pay as per usage.
+
+
+types:
+public : customer's data.
+private : customer's organization data.
+hybrid : public + private.
+
+
+Types of cloud servies:
+
+IAAS (Infrastructure as as service)  : storage + internet connectivity. 
+
+PAAS (Platform as a service) : data base , workflow engine, emails etc 
+
+SAAS (Software as a service) : end-user applications.
+
+advantages:
+a) Cost-efficient.
+b) easy access.
+c) back up & recovery.
+d) unlimited storage.
+
+
+disadvantages:
+a) security risk : using external services to import data / files.
+b) Technical issues : sometimes it goes to suspended mode (internet connectivity failure. we cant access our application)
+c) Not easy to switch to cloud:  organization may find many difficulties to switch their application to cloud.
+
+different domain :
+compute
+migrate
+storage
+database
+messaging
+
+EC2 ( Elastic computing)
+raw server.
+
+
+Lamda (advanced version of EC2)
+
+
+
+
+account Name : easwaraws
+easwar.j@gmail.com
+12ssdvjj@
+Axis bank debit card details is given.
+
+
+EC2
+===
+windows IP : 18.216.61.151
+Administrator
+Z(Om7t-n9CDkv!@LeDPF2@tu$i9M$xML
+
+
+RDS
+
+db instanace name : sqlserverdemo
+
+user Name : nohuman
+password : nohumansql
+sqlserverdemo.c4oitw02wusz.us-east-2.rds.amazonaws.com:1433
+
+
+
+
+http://18.216.61.151:8080/models/detail/Action
+http://172.31.27.128:8080/models/detail/Action
+

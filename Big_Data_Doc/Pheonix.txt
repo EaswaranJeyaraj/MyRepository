@@ -1,0 +1,80 @@
+Phoenix:
+========
+SQL layer on top of Hbase to support sql operation like CRUD. It translates SQL to native Hbase API calls.
+
+Turn Hbase into SQL data base.
+
+110 N rows : 0.04 sec (7000 times faster)
+
+Fastest way to access Hbase. 
+a) It translates SQL to native Hbase API calls.
+b) execute scan in parallel
+c) light weight , no server required. (100 % java)
+
+It can integrate with hbase, pig,hive,sqoop
+
+
+y phoenix:
+a) SQL API
+b) too much of code rquired in hbase,.
+c) executing aggreegation (avg,count..)
+
+!outputformat horizontal
+!outputformat vertical : to view the results in vertical instead harizandal.
+select * from "<table>";
+upsert into "<table_Name>" values ...
+
+----------------------------------------------------------------------------------------------
+Installation Details:
+=====================
+Apache phoenix = /opt/apache-phoenix-4.13.1-HBase-1.2-bin
+
+To start the using the below step
+
+1. login has a hadoop user
+2. Go to this path
+   cd /opt/apache-phoenix-4.13.1-HBase-1.2-bin
+3. then execute this command
+   bin/sqlline.py localhost
+
+For reference please check this url: https://phoenix.apache.org/installation.html
+
+
+
+List tables:
+select DISTINCT("TABLE_NAME") from SYSTEM.CATALOG;
+----------------------------------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS TESTING (   DOMAIN VARCHAR NOT NULL,     FEATURE VARCHAR NOT NULL , CONSTRAINT PK PRIMARY KEY (DOMAIN));
+
+
+CREATE TABLE IF NOT EXISTS WEB_STAT (
+     HOST CHAR(2) NOT NULL,
+     DOMAIN VARCHAR NOT NULL,
+     FEATURE VARCHAR NOT NULL,
+     DATE DATE NOT NULL,
+     USAGE.CORE BIGINT,
+     USAGE.DB BIGINT,
+     STATS.ACTIVE_VISITOR INTEGER
+     CONSTRAINT PK PRIMARY KEY (HOST, DOMAIN, FEATURE, DATE)
+);
+upsert into WEB_STAT values ('NA','Salesforce.com','Login','2013-01-01 01:01:01',35,42,10)
+
+upsert into persons values(11,'first','second','address1','chennai')
+
+update WEB_STAT set host = 'not applicable';
+
+CREATE TABLE IF NOT EXISTS TEST_PH(ID VARCHAR NOT NULL,COMPANYID INTEGER NOT NULL CONSTRAINT PK PRIMARY KEY (ID,COMPANYID));
+UPSERT INTO TEST_PH VALUES ('1',1);
+DELETE FROM TEST_PH;
+
+UPDATE: SAME UPSERT BUT PRIMARY KEY VALUES TO BE PASSED. SO THAT RECORD WILL BE UPDATED.
+ALTER TABLE TEST_PH ADD NAME VARCHAR;
+
+CREATE TABLE IF NOT EXISTS TEST_PH1(ID VARCHAR NOT NULL,COMPANYID1 INTEGER NOT NULL CONSTRAINT PK PRIMARY KEY (ID,COMPANYID1));
+
+JOIN:
+SELECT  PH.ID FROM TEST_PH PH , TEST_PH1 PH1 WHERE PH.ID = PH1.ID;
+SELECT  PH.ID FROM TEST_PH PH JOIN TEST_PH1 PH1 ON PH.ID = PH1.ID;
+
+----------------------------------------------------------------------------------

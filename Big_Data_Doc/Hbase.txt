@@ -1,0 +1,97 @@
+Hbase: (Desinged to provide quick random access to huge amount of strcutured data.)
+ ======
+ 
+ Hbase:  
+ distributed column-oriented database built on top of the HDFS. It is an open-source project and is horizontally scalable.
+ 
+ Table : Collection of rows
+ Row : collction of column family.
+ Column family : collection of column
+ Column : Key (rowkey) /value (column values) pair.
+ 
+ zoo keeper : maintains config information.
+  
+ 
+ http://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-hs/HistoryServerRest.html
+ 
+ Hbase Installation :   http://linuxpitstop.com/configure-distributed-hbase-cluster-on-centos-linux-7/
+ 
+ URL http://192.168.12.46:16010/
+
+Installed path: /home/hadoop/hbase
+
+
+
+./bin/hbase shell
+
+
+hbase : 
+a) If column value is null, then space will not be allocated.
+b) versioning. (time stamp) , in get will get the fresh value (last modified), scan : get all the version values.
+default version : 1
+c) to drop the table, firt table to be disabled.
+
+--------------------------------------------------------------------------------
+Installation Details:
+=====================
+
+Hbase Installation Details:
+Intallation details:
+URL http://192.168.12.46:16010/
+
+Installed path: /home/hadoop/hbase
+To start the hbase command: start-hbase.sh To stop the hbase command:  stop-hbase.sh
+reference url: http://linuxpitstop.com/configure-distributed-hbase-cluster-on-centos-linux-7/
+
+--------------------------------------------------------------------------------
+
+commands:
+
+create 'emp','personal','official'
+
+put 'emp','001','personal:name','first'
+put 'emp','001','personal:location','chennai'
+put 'emp','001','official:company','vectone'
+put 'emp','001','official:country','india'
+
+
+put 'emp','002','personal:name','second'
+put 'emp','002','personal:location','Mumbai'
+put 'emp','002','official:company','infy'
+put 'emp','002','official:country','Northindia'
+
+get 'emp','001'
+get 'emp','001','official'
+
+update:
+put 'emp','001','personal:name','third'
+
+delete column:
+delete 'emp','001','personal:name'
+
+delete column family:
+alter 'emp','delete => 'personal'
+
+Add column family :
+alter 'emp',{NAME =>'personal'}
+
+version:
+create 'emp',NAME=>'personal',VERSIONS=>2
+put 'emp','001','personal:name','first'
+put 'emp','001','personal:name','second'
+put 'emp','001','personal:name','third'
+scan 'emp',{COLUMN=>'personal:name',VERSIONS=>3}
+
+alter 'emp','personal',VERSIONS=>3
+
+Hbase      Hive 
+crud 
+versioning
+             join
+			 agreegation (sum,max,min)
+			
+
+hbase shell commands : https://www.youtube.com/watch?v=m1jjMBpS6Hs			
+			 
+
+			 

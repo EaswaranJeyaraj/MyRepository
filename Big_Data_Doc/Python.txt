@@ -1,0 +1,14 @@
+python:
+
+object oriented high leven programming language.
+
+
+Python is processed at runtime by the interpreter. You do not need to compile your program before executing it. This is similar to PERL and PHP
+
+
+path : C:\Python27;C:\Python27\Lib\site-packages\;C:\Python27\Scripts\
+
+
+PYTHONPATH  :    C:\Python27\Lib
+
+
