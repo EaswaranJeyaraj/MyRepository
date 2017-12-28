@@ -6,6 +6,10 @@ easwaran
 12ssdvjj
 
 
+Process of automating the deployment process in a continuous delivery system.
+
+Build --> deploy --> test --> release.	
+
 developer check-in --> Git Repository --> Jenkin (check the repository on continus interval & build) --> Sellenium (jenkin deploy the changes in testing server)
 
 --> build tool deploy the changes in production server.
@@ -44,4 +48,31 @@ Create job:
 Jenkins --> New Item --> Enter Item Name + Select Free style Project --> OK.
 
 
+a) project --> configure --> 
 
+i) Source Code management --> Git --> 
+
+Repository URL : https://github.com/EaswaranJeyaraj/Droolsrule.git
+Add crendentials :
+
+
+ii) Build Trigger -->Poll SCM 
+Schedule :  * * * * *
+
+iii) Build
+Execute Windows batch Command:
+command : mvn clean package
+command : cd C:\Program Files (x86)\Jenkins\workspace\Droolsrule
+command : move target\rule-engine-1.0-SNAPSHOT.jar E:\Changes\Project\Jenkin
+
+
+
+
+
+
+
+
+copy target\rule-editor-1.0-SNAPSHOT.jar \\82.113.66.15\Jenkin_check
+
+
+https://github.com/EaswaranJeyaraj/Droolsrule.git
