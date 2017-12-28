@@ -2,7 +2,7 @@ a) Map reduce configuration about which map reduce to be consider to split data.
 b) View all the details in browser.
 c) AWS
 e) collect version details of all
-f) Git repository creation.
+g) automation tool (jenkins) + test cases.
 
 --------------------------------------------
 HDFS : Hadoop Distributed File System - Files will be broken into blocks & stored in node over the distributed architecture.
