@@ -1,6 +1,8 @@
 Jenkin Tutorial
 ===============
 
+UR: http://localhost:9190/
+
 credential:
 easwaran
 12ssdvjj
@@ -17,6 +19,10 @@ developer check-in --> Git Repository --> Jenkin (check the repository on contin
 
 Jenkin : is a framework with no feature.
 
+Start Jenkin service:
+C:\Program Files (x86)\Jenkins> jenkins start 
+C:\Program Files (x86)\Jenkins> jenkins stop
+C:\Program Files (x86)\Jenkins> jenkins restart
 
 start:
 java -jar jenkin.war --httpPort=1980
@@ -63,16 +69,10 @@ iii) Build
 Execute Windows batch Command:
 command : mvn clean package
 command : cd C:\Program Files (x86)\Jenkins\workspace\Droolsrule
-command : move target\rule-engine-1.0-SNAPSHOT.jar E:\Changes\Project\Jenkin
-
-
-
-
-
-
-
-
-copy target\rule-editor-1.0-SNAPSHOT.jar \\82.113.66.15\Jenkin_check
-
+command : copy target\rule-engine-1.0-SNAPSHOT.jar E:\Changes\Project\Jenkin
 
 https://github.com/EaswaranJeyaraj/Droolsrule.git
+
+
+cd E:\Changes\Project\Jenkin
+java -jar rule-editor-1.0-SNAPSHOT.jar
