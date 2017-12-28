@@ -1,0 +1,47 @@
+Jenkin Tutorial
+===============
+
+credential:
+easwaran
+12ssdvjj
+
+
+developer check-in --> Git Repository --> Jenkin (check the repository on continus interval & build) --> Sellenium (jenkin deploy the changes in testing server)
+
+--> build tool deploy the changes in production server.
+
+
+Jenkin : is a framework with no feature.
+
+
+start:
+java -jar jenkin.war --httpPort=1980
+
+https://www.youtube.com/watch?v=bGqS0f4Utn4
+
+C:\Users\j.easwaran\IdeaProjects\hadoop\src\main\java\
+
+
+Configuration :
+
+Jenkins --> Manage Jenkins --> Global Tool Configuration --> Add JDK
+
+JDK:
+Name : jdk1.8.0_141
+JAVA_HOME :  C:\Program Files\Java\jdk1.8.0_141
+
+Git -->  
+
+Name : GIT_HOME
+Path to Git executable : C:\Program Files\Git\bin\git.exe
+
+Maven : 
+Name : MAVEN_HOME
+MAVEN_HOME : E:\apache-maven-3.5.0
+
+
+Create job:
+Jenkins --> New Item --> Enter Item Name + Select Free style Project --> OK.
+
+
+
