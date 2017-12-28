@@ -82,6 +82,11 @@ user Name : nohuman
 password : nohumansql
 sqlserverdemo.c4oitw02wusz.us-east-2.rds.amazonaws.com
 
+hadoop.c4oitw02wusz.us-east-2.rds.amazonaws.com
+username: hadoop
+password: hadoop123
+
+
 :1433
 
 Master password : masterpassword
