@@ -58,10 +58,21 @@ Axis bank debit card details is given.
 
 EC2
 ===
-windows IP : 18.216.61.151
+http://13.58.29.224:8080/
+windows IP : 13.58.29.224
 Administrator
 Z(Om7t-n9CDkv!@LeDPF2@tu$i9M$xML
 
+Ec2 - Linux
+===========
+IP: 52.14.188.96
+user: ec2-user
+password: aws-demo.ppk
+
+ec2-user@52.14.188.96
+sudo su
+
+==================================================================
 
 RDS
 
@@ -69,11 +80,26 @@ db instanace name : sqlserverdemo
 
 user Name : nohuman
 password : nohumansql
-sqlserverdemo.c4oitw02wusz.us-east-2.rds.amazonaws.com:1433
+sqlserverdemo.c4oitw02wusz.us-east-2.rds.amazonaws.com
+
+:1433
+
+Master password : masterpassword
+
+
+Admin@123
 
 
 
 
 http://18.216.61.151:8080/models/detail/Action
-http://172.31.27.128:8080/models/detail/Action
+http://172.31.27.128:22/models/detail/Action
 
+
+
+
+
+
+a) linux access putty & filezilla & check file transfer.
+b) RDS sql server , create table.
+c) 
