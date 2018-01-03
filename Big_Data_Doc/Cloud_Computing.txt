@@ -47,15 +47,6 @@ raw server.
 
 Lamda (advanced version of EC2)
 
-
-
-
-account Name : easwaraws
-easwar.j@gmail.com
-ssdvjj12@
-Axis bank debit card details is given.
-
-
 EC2
 ===
 http://13.58.29.224:8080/
@@ -112,11 +103,3 @@ spring.datasource.driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver
 spring.datasource.username=nohuman
 spring.datasource.password=nohumansql
 
-
-
-
-
-
-a) linux access putty & filezilla & check file transfer.
-b) RDS sql server , create table.
-c) 
