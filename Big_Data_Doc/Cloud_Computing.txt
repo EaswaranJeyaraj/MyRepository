@@ -78,7 +78,7 @@ Host : 52.14.188.96
 Protocol : SFTP- SSH file Transfer protocol
 Logon type : Key file
 user : ec2-user
-key file : E:\Others\Changes\Project\aws-demo.ppk
+key file : E:\Others\Changes\Project\aws-demo.ppk 
 
 
 
