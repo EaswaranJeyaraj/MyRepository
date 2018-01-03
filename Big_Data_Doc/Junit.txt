@@ -1,0 +1,33 @@
+Junit:
+======
+Unit testing framework.
+
+@Test
+@Test(timeout=1000)
+@BeforeClass (only once)
+@Before
+@AfterClass (only once)
+@After
+
+
+methods:
+assertEquals(boolean, boolean)
+asertTrue(boolean)
+assertFalse(boolean)
+assertNull(object)
+assertNotNull(object)
+assertSame(class1,class2)
+
+
+list Check:
+
+assertThat(list1,is(list2))
+assertThat(list1,hasItem("val"))
+assertThat(list1,hasSize(3))
+assertThat(list1,contains("a","b"))
+
+map check:
+assertThat(map,is(map))
+assertThat(map,IsMapContainint.hasEntry("key","Value"))
+assertThat(map,IsMapContainint.hasKey("key"))
+
