@@ -2,7 +2,7 @@ Clound Computing:
 =================
 Internet based computing services.
 
-a) releas resources on demand.
+a) release resources on demand.
 b) resource scalle up/down automtically based on load
 c) accessible through n/w with proper security.
 d) pay as per usage.
@@ -52,7 +52,7 @@ Lamda (advanced version of EC2)
 
 account Name : easwaraws
 easwar.j@gmail.com
-12ssdvjj@
+ssdvjj12@
 Axis bank debit card details is given.
 
 
@@ -72,15 +72,28 @@ password: aws-demo.ppk
 ec2-user@52.14.188.96
 sudo su
 
+
+putty:
+======
+a) Enter Host IP
+b) Connection --> SSH --> Auth --> browse & give PPK file.
+
+
+File Zilla:
+===========
+File --> Site Manager --> My Site --> New Site --> enter the following  & connect.
+
+Host : 52.14.188.96
+Protocol : SFTP- SSH file Transfer protocol
+Logon type : Key file
+user : ec2-user
+key file : E:\Others\Changes\Project\aws-demo.ppk
+
+
+
 ==================================================================
 
 RDS
-
-db instanace name : sqlserverdemo
-
-user Name : nohuman
-password : nohumansql
-sqlserverdemo.c4oitw02wusz.us-east-2.rds.amazonaws.com
 
 hadoop.c4oitw02wusz.us-east-2.rds.amazonaws.com
 username: hadoop
@@ -89,16 +102,15 @@ password: hadoop123
 
 :1433
 
-Master password : masterpassword
+spring.datasource.url=jdbc:sqlserver://hadoop.c4oitw02wusz.us-east-2.rds.amazonaws.com:1433;databaseName=hadoop;instanceName=hadoop;
+spring.datasource.driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver
+spring.datasource.username=hadoop
+spring.datasource.password=hadoop123
 
-
-Admin@123
-
-
-
-
-http://18.216.61.151:8080/models/detail/Action
-http://172.31.27.128:22/models/detail/Action
+spring.datasource.url=jdbc:sqlserver://10.30.2.117;databaseName=MarketingAutomation;instanceName=development;
+spring.datasource.driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver
+spring.datasource.username=nohuman
+spring.datasource.password=nohumansql
 
 
 

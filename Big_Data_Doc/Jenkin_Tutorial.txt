@@ -1,7 +1,7 @@
 Jenkin Tutorial
 ===============
 
-UR: http://localhost:9190/
+URL: http://localhost:9190/
 
 credential:
 easwaran
@@ -76,3 +76,9 @@ https://github.com/EaswaranJeyaraj/Droolsrule.git
 
 cd E:\Changes\Project\Jenkin
 java -jar rule-editor-1.0-SNAPSHOT.jar
+
+=============================================
+
+Selenium : automates web browser testing. mainly used for functional testing (unit & regression testing)
+
+
