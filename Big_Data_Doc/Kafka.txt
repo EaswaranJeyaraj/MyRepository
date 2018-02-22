@@ -1,0 +1,83 @@
+To start, stop and restart zookeeper
+
+/opt/zookeeper/bin/zkServer.sh start 
+/opt/zookeeper/bin/zkServer.sh stop
+/opt/zookeeper/bin/zkServer.sh restart
+
+To start, stop the kafka
+
+/opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/server.properties 
+
+/opt/kafka/bin/kafka-server-stop.sh
+
+
+create topic:	
+/opt/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1  --partitions 1 --topic Hello-Kafka
+
+Delete Topic :
+/opt/kafka/bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic Hello-kafka
+
+list topics:
+/opt/kafka/bin/kafka-topics.sh --list --zookeeper localhost:2181
+
+start producer:
+/opt/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic Hello-Kafka
+
+send message from producer.
+
+start consumer :
+/opt/kafka/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic Hello-Kafka --from-beginning          
+consumer will recieve message from producer.
+		  
+
+Kafka: Messaging queue / data pipeline.
+======
+
+kafka : Messaging broker.
+
+why kafka. & why not other messaging broker like rabbit queue , active mq... 
+in Big data, huge volume of data will come with high velocity (speed). 
+for holding these data form some time / processing complexity of data.. normal mq cant be used.
+since storage is not sufficient... etc. & they can not handle all real time data.
+
+kafka is giving 100% Reliability not loose any data.with max parallelism.
+kafka : acknowledgement mode / no acknowledgement mode.
+
+messaging server is called as kafka broker.
+Producer any application (developed by any language) pusing messages to kafka broker.
+consumer : consumeing messages from kafka brokers
+topic : categrization of storage. unique name will be giving to different type of messages. i will store this type of messages only this partion.
+& consumer wil receive this type of messages.
+
+partion : topic splited into partion (file), which are replicated. immutable   of messages constantly appended.
+
+multiple partition : message will be writen in multiple files. so that multiple threads can read in multiple files.
+once consumer pull the message. then kafka will delete the message.
+
+2 types:
+a) publish subscriber messaging (mutliple consumer group reading from different topic).
+b) point to point (single consumer group reading from same topic).
+
+kafka cluster : kafka having more than one broker called kafka cluster.
+
+broker can have zero or more topic.
+
+if N number of partions & N number of brokers then each broker wil have one partion.
+if N number of partions & N + 1  number of brokers then each broker wil have one partion & nth + 1 broker wont have any partion.
+if N+1 number of partions & N number of brokers then each broker wil have one partion & some of the brokers may have multiple partions.
+
+
+offset : unique Id associated with every message.
+
+kafka brokers are stateless & they use zoo keeper for session state.
+
+kafka broker instance handle l lac number of reads/writes.
+
+each broker can handle TB of data per/sec without any performance impact.
+
+zooKeeper : manage & coordinate the brokers. notify the producer & consumers  to find broker failure.
+all the metadata information will be stored in zooKeeper.
+broker leader election will be conducted by zoo keeper.
+
+
+https://www.youtube.com/watch?v=4Vr2Xtm5lDw

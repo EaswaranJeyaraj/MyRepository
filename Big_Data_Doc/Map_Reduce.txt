@@ -1,0 +1,58 @@
+Map Reduce:
+ Map Reduce : MapReduce is a programming model designed for processing huge volume of data in parallel 
+ by dividing the work into a set of independent tasks.
+ we need to put business logic in the way MapReduce works and rest things will be taken care by the framework
+ 
+ Map output : intermediate out put (saved in local disk)
+  
+ map reduce run on top of yarn.
+  
+  
+ input -> spliting --> mapping --> shuffling --> reducing (sorting) --> output (list)
+      --> words   --> key/value ->          --> word count         --> word: count    
+
+ Map : spliting + mapping
+     reduce : shuffling + reducing.
+	 
+	 
+To stop all hadoop instances run the below commands:
+
+installation path :
+/opt/hadoop
+
+configuration file:
+/opt/hadoop/etc/hadoop
+
+to start /stop services.
+/opt/hadoop/sbin
+$ start-dfs.sh
+$ start-yarn.sh
+
+stops:
+stop-dfs.sh
+stop-yarn.sh
+
+jps : to get the list of running services.
+
+commands:
+vi index1.txt
+<enter statement>
+esc + :wq
+
+hdfs dfs -mkdir /my_storage
+hdfs dfs -put index1.txt /my_storage
+
+hdfs dfs -ls /my_storage/
+hdfs dfs -cat /my_storage/index1.txt
+hdfs dfs -help
+
+ hadoop jar mapreduce.jar MarketRatings /my_storage/farm-market-data.csv /home/hadoop/output3
+ 
+ 192.168.12.46
+ hdfs://192.168.12.46:9000/home/hadoop/output
+ 
+ 
+ 
+ Map Reduce:
+ master : Jobtracker
+ Slave : TaskTracker.

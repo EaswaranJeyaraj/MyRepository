@@ -1,0 +1,225 @@
+Spark :
+======
+
+proces live streaming data. but hadoop will process only batch (history) data.
+
+
+https://www.youtube.com/watch?v=9mELEARcxJo
+
+Mapper:
+  (a,1)
+  (a,1)
+  (b,1)
+  (c,1)
+  (b,1)
+  
+shuffle  :
+
+(a,1)
+(a,1)
+
+(b,1)
+(b,1)
+
+(c,1)
+
+
+sort:
+
+(a,1,1)
+(b,1,1)
+(c,1)
+
+
+Reduce:
+(a,2)
+(b,2)
+(c,1)
+  
+map-reduce is slower. because so many inputs (String data in disk) & outputs steps.
+
+mapping (input) --> store(output) --> shuffle (input) --> store --> ....
+
+Spark Context : 
+
+memory : RAM
+Disk : space.
+
+RDD : (Resilient (Reliable) distributed data set)
+3 node (RAM) data combinedly sitting in one memory is called RDD.
+Distributed data which sitting in memory in different node.
+ 
+
+ Spark                   map reduce
+ a) real time & batch    a) Only batch (process history data)
+ b) fast 
+ c) easy to use.
+ 
+ 
+ spark work independently & HDFS/hadoop is not required . spark can work with standalone cluster.
+ 
+ various combination:
+ a) spark + hdfs
+ b) spark + map reduce.
+ c) spark + yarn.
+ d) standalone spark.
+ 
+ ------------------------------------
+ Lazy evaluation:
+ data will be loaded in memory only when we do action.
+ 
+ a) RDD number = sc.textfile("F.txt")
+ b) RDD filter = number.map("logic to find the values.")
+ c) filter.collect  //Action.
+ 
+  Unless executing the action statement (c) ,data will not be loaded from F.txt file.
+  
+  ------------------------------------
+ 
+Hadoop is one of the ways to implement spark.
+spark uses hadoop in 2 ways : 1) storage 2) processing.
+
+100 times faster in memory & 10 times faster in disk.
+support multiple languages.
+it supports map reduce, sql queries, streaming , Machine learning languages (ML)
+
+RDD (Resilient distributed dataset) : fundamental data structure of spark . Immutable collection of objects 
+ it stores the state of the memory as an object across all the jobs & object can be shared across all the jobs.
+ if distributed memory is not sufficient, then it will store in disk.
+
+2 ways to create RDD
+a) Parallelizing :  existing collection in your driver program.
+b) Referencing a dataset : external storage such as hdfs,hbase,..
+
+spark make use of RDD concepts & archive fast and efficient map reduce operation.
+
+
+spark variables:
+==============
+Broadcast
+Distributer
+
+
+
+streaming : spark streaming context
+sql       :       sql context
+hive      :        hive context
+
+SparkSession  : combination of all the above 3 .
+
+
+Spark Components:
+a) spark core 
+b) spark steaming 
+c) spark sql
+d) machine library
+e) graphx.
+
+
+execution:
+=========
+create file in home directory.
+
+input.txt
+people are not as beautiful as they look, 
+as they walk or as they talk.
+they are only as beautiful  as they love, 
+as they care as they share.
+
+To start spark.
+
+>> spark-shell
+
+>> val inputfile = sc.textFile("input.txt")
+>> val counts = inputfile.flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey(_+_);
+>> counts.saveAsTextFile("output") 
+
+
+goto home directory 
+>> cd output/
+>> cat output
+	
+----------------------------------------
+
+
+
+
+spark streaming:
+===================
+Divides the inputs (RDD) into units continuously for processing. (website monitoring,fraud detection,advertising)
+
+streaming : 
+card is been swiped in india  & with in hour  the same card is getting swiped in US (fraud transaction).
+This is can be processed everytime the card is been used.this is process is called streaming.
+
+streaming sources : HDFS directories, kafka,tcp sockets, flume...
+
+
+kafka,flume ,twiter,hdfs --> streaming --> HDFS,databases 
+
+DStream : mutliple set of RDD.
+
+spark streaming divides inputs into batches (DStream/sequence of RDD), our Spark application process the RDD using spark API.
+processed result of the RDD returned in batches.
+
+input data stream --> spark streaming --> RDD @ time 1 (dstream) --> RDD@ time2 --> RDD @time 3 --> SPark engine --> batches of processed data.
+
+
+input stream --> dstream -->process --> words Stream .
+
+
+input stream sources:
+a) basic sources : file system , socket connection.
+b) advance sources : kafka , flume.
+
+output operation : post stream , data can be stored as file , db,objects,
+foreachRDD one of the output operation.
+  
+spark streaming : extension of core spark API.
+processing live streaming of data.
+
+concepts: a) Transformation (creating new Dstream) b)output operation (baches).
+
+Stock price --> kafka messaging service --> spark streaming --> HDFS sink  --> HDFS storage. 
+
+fraud detection
+sentiment analytics
+website  ""
+
+https://www.youtube.com/watch?v=RQEPONxBzBY
+ 
+https://www.youtube.com/watch?v=pV4F-Fq5zdY
+
+--------------------------------------------------------------------------------------------
+ 
+simple java word count streaming program.
+ 
+import org.apache.spark.*;
+import org.apache.spark.api.java.function.*;
+import org.apache.spark.streaming.*;
+import org.apache.spark.streaming.api.java.*;
+import scala.Tuple2;
+
+// Create a local StreamingContext with two working thread and batch interval of 1 second
+SparkConf conf = new SparkConf().setMaster("local[2]").setAppName("NetworkWordCount");
+JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(1));
+
+// Create a DStream that will connect to hostname:port, like localhost:9999
+JavaReceiverInputDStream<String> lines = jssc.socketTextStream("localhost", 9999);
+
+// Split each line into words
+JavaDStream<String> words = lines.flatMap(x -> Arrays.asList(x.split(" ")).iterator());
+
+// Count each word in each batch
+JavaPairDStream<String, Integer> pairs = words.mapToPair(s -> new Tuple2<>(s, 1));
+JavaPairDStream<String, Integer> wordCounts = pairs.reduceByKey((i1, i2) -> i1 + i2);
+
+// Print the first ten elements of each RDD generated in this DStream to the console
+wordCounts.print();
+
+
+--------------------------------------------------------------------------------------------
+
+from beginning : means whatever message we have produced from beginning.
+
+https://www.youtube.com/watch?v=J9UINMLbNxU

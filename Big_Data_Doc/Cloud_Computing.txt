@@ -1,3 +1,6 @@
+
+
+
 Clound Computing:
 =================
 Internet based computing services.
@@ -14,9 +17,9 @@ private : customer's organization data.
 hybrid : public + private.
 
 
-Types of cloud servies:
+Types of cloud services:
 
-IAAS (Infrastructure as as service)  : storage + internet connectivity. 
+IAAS (Infrastructure as service)  : storage + internet connectivity. 
 
 PAAS (Platform as a service) : data base , workflow engine, emails etc 
 
@@ -53,6 +56,10 @@ http://13.58.29.224:8080/
 windows IP : 13.58.29.224
 Administrator
 Z(Om7t-n9CDkv!@LeDPF2@tu$i9M$xML
+
+
+mZ.9Bjh%fq=5)gVC4K.eT-PT9cQ%-.5w
+
 
 Ec2 - Linux
 ===========
@@ -102,4 +109,43 @@ spring.datasource.url=jdbc:sqlserver://10.30.2.117;databaseName=MarketingAutomat
 spring.datasource.driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver
 spring.datasource.username=nohuman
 spring.datasource.password=nohumansql
+
+
+-----------------------------------------
+
+Cluster configuration:
+1) VPC : (Elastic IP) static IP.
+
+ VPC --> Create VPC wizard --> Select --> give VPC name --> Click create.
+ 
+2) Giving previllege.
+  EC2 --> Security Group -->  Create security Group --> Enter name & Description  & select created VPC name --> 
+  Inbound --> add.
+  Type : SSH, HTTP, All TCP , all ICMP 
+  source : anywhere
+  
+3) Key / Pair : to access locally.
+
+4) Instances :
+   
+  
+  
+  
+2) Configure instance details.
+   i) net work : 
+   ii) auto assign public ip : use subnet setting (Enable)
+   iii) tag : value : sample hadoop cluster.
+   
+3) configure security group : select from existing one
+4) select existing key value pair
+
+
+https://www.youtube.com/watch?v=EdBB0Owu3TE
+
+https://www.youtube.com/watch?v=xrxQXfE7t9A
+
+
+=================================================================
+
+
 

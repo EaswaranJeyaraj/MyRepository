@@ -20,10 +20,7 @@ Hbase: (Desinged to provide quick random access to huge amount of strcutured dat
 
 Installed path: /home/hadoop/hbase
 
-
-
 ./bin/hbase shell
-
 
 hbase : 
 a) If column value is null, then space will not be allocated.
@@ -88,8 +85,8 @@ Hbase      Hive
 crud 
 versioning
              join
-			 agreegation (sum,max,min)
-			
+			 aggregation (sum,max,min)
+			 			
 
 hbase shell commands : https://www.youtube.com/watch?v=m1jjMBpS6Hs			
 			 

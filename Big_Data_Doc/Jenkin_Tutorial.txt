@@ -12,7 +12,7 @@ Process of automating the deployment process in a continuous delivery system.
 
 Build --> deploy --> test --> release.	
 
-developer check-in --> Git Repository --> Jenkin (check the repository on continus interval & build) --> Sellenium (jenkin deploy the changes in testing server)
+developer check-in --> Git Repository --> Jenkin (check the repository on continuous interval & build) --> Sellenium (jenkin deploy the changes in testing server)
 
 --> build tool deploy the changes in production server.
 
@@ -76,9 +76,16 @@ https://github.com/EaswaranJeyaraj/Droolsrule.git
 
 cd E:\Changes\Project\Jenkin
 java -jar rule-editor-1.0-SNAPSHOT.jar
-
-=============================================
-
+======================================
 Selenium : automates web browser testing. mainly used for functional testing (unit & regression testing)
 
 
+Jenkins
+Stop / Start Jenkins.
+Accessing Jenkins console.
+JDK configuration with Jenkins.
+Git configuration with Jenkins.
+Maven build configuration with Jenkins.
+Job Creation.
+Job Configuration.
+Build generation.

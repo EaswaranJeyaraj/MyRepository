@@ -1,14 +1,19 @@
+Pending:
 a) Map reduce configuration about which map reduce to be considered to split data.
-b) View all the details in browser.
+b) View all the details in browser. + ambari.
 c) collect version details of all
 d) automation tool (jenkins) + test cases, jenkin reports.
 e) agile reports (burndown,canban)
-f) 
+i) twiter spark streaming.
 
 --------------------------------------------
 HDFS : Hadoop Distributed File System - Files will be broken into blocks & stored in node over the distributed architecture.
-Yarn : Yet another resource navigator : used for scheduling & managing cluster.
+Yarn : Yet another resource negotiator (map reduce version 2) : used for scheduling & managing cluster.
 Map reduce : helps java programmers for parallel computation of data using key/value. map task converts data into data set. which can be computed in key/value pair.
+
+
+mapping (a,1) --> Splitting --> shuffling --> Reducing.
+
 
 mapper : The mapper processes the data and creates several small chunks of data
 
@@ -62,7 +67,7 @@ Hbase table model:
 sorted by rowkey:
 
 rowkey,[name,email,password...] --> cells.
-each celss has multiple version,modified data/time.
+each cell has multiple version,modified data/time.
 
 hbase commands.
 create 'table1', 'colf'  
@@ -77,7 +82,7 @@ list 'table1'
  MapReduce : divides the task into small parts & assign these parts into many computers connected over the n/w.
  & collect these results to form the final result.
  
- mapp stage : input file passed to the mapper function line by line. Mapper  process the data & create small chunks of data
+ map stage : input file passed to the mapper function line by line. Mapper  process the data & create small chunks of data
  Reduce stage : combination of shuffle & reduce. 
  
  Hadoop runs applications using the MapReduce algorithm
@@ -93,13 +98,9 @@ list 'table1'
       map task : this task takes input data & converts into set of datas (key/value pair).
 	  Reduce task : this task takes output from map task (word count algorithm)
  
- Map Reduce : MapReduce is a programming model designed for processing huge volume of data in parallel 
- by dividing the work into a set of independent tasks.
- we need to put business logic in the way MapReduce works and rest things will be taken care by the framework
+
  
- Map output : intermediate out put (saved in local disk)
- 
- Cluster : physical grouping of server
+Cluster : physical grouping of server
 Oracle virtual box manager.
 ================================
 spark :  Bye pass the mapreduce.
@@ -108,16 +109,13 @@ lightning-fast cluster computing technology
 spark --> hdfs  : standalone
 spark --> yarn --> hdfs : yarn 
 spark --> mapreduce --> hdfs  (SIMR)
-================================
+====================================
 
 storage (HDFS)         + processing (Map reduce) : Yarn
-Name node , data node.        resouce manager, node manager, 
+Name node , data node.  reduce manager, node manager, 
 
 hadoop1 : map reduce
 yarn (only do resource allocation manager): map reduce version 2. 
-
-map reduce run on top of yarn.
-
 
 storage (hadoop HDFS) + processing (hadoop Map reduce)
 
@@ -136,16 +134,7 @@ hdfs dfs put welcome /
 hdfs dfs -ls 
 hdfs dfs -cat /welcome 
 hdfs dfs -help 
-
-map reduce :
-
-input -> spliting --> mapping --> shuffling --> reducing (sorting) --> output (list)
-      --> words   --> key/value ->          --> word count         --> word: count    
-
-	 Map : spliting + mapping
-     reduce : shuffling + reducing.
-	 
-	  
+  
 	  
  processing the data faster. : It means that instead of moving data from different nodes to a single master node for processing, the processing logic is sent to the nodes where data is stored so as that each node can process a part of data in parallel. Finally, all of the intermediary output produced by each node is merged together and the final response is sent back to the client.
  
@@ -160,7 +149,7 @@ input -> spliting --> mapping --> shuffling --> reducing (sorting) --> output (l
  
  Yarn 
  
- Resorce Manager:
+ Resource Manager:
  a) cluster level component (one for each cluster) running on master.
  b) manages resources/scheduling on top of yarn.
  c) two components : i) scheduler (allocating resources) ii) application manager (accepting job submission)
@@ -185,7 +174,7 @@ input -> spliting --> mapping --> shuffling --> reducing (sorting) --> output (l
  
  https://www.edureka.co/blog/hadoop-tutorial/#
  
-  Restliant , data distribution... Kafka  API/ scalla. 
+  Resilient , data distribution... Kafka  API/ scalla. 
   spark client..
   
   SSL 
@@ -194,10 +183,7 @@ input -> spliting --> mapping --> shuffling --> reducing (sorting) --> output (l
 	Semi Structured data : XML data.
 	Unstructured data : Word, PDF, Text, Media Logs
   
-  
- 
- 
- Spark Stream : processing of live streaming data.
+Spark Stream : processing of live streaming data.
  
 (weblog) or (stocks pricess) --> kafka --> streaming (batching) --> HDFS
 
@@ -222,15 +208,18 @@ if no data
 
 avoid hdfs:
 1. low letency access ( 	fetching single record from million record in a second)
-2. lof of small files (name node (RAM) will be ocuumpied with many entries)
-3. parellel write : HDFS write a file in single place.. & the same file can be written by other parallel process.
+2. lot of small files (name node (RAM) will be occupied with many entries)
+3. parallel write : HDFS write a file in single place.. & the same file can be written by other parallel process.
  
+
+ 
+---------------------------------------------------------------------------------------------------------------------------
 
 Move the hadoop production data from production to UAT
 hadoop listcp http://<host>:<port>/filesys   <destination url>
 internally use mapreduce
 
------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
 scala : 2.12.1
 
 Scala is an object-oriented and functional programming language.
@@ -300,14 +289,12 @@ a) Java instllation
 b) ssh installation : used to interact with master / slave node without prompting for user id /password.
 
 
-
-
 Jani's system IP : 
 192.168.12.46
 root
 mundio123
 
-macine details : hostnamectl 
+machine details : hostnamectl 
 
 RAM speed:
 dmidecode --type 17
@@ -324,50 +311,152 @@ http://192.168.12.46:8088/cluster
 http://192.168.12.46:8042/node
 
 
-21. To stop all hadoop instances run the below commands:
+=============================================================================
 
-installation path :
-/opt/hadoop
+ Cluster : Physically grouping of machines.
 
-configuration file:
-/opt/hadoop/etc/hadoop
+Hadoop --> Storage (HDFS) --> Name Node , Data node
+       --> Processing (Yarn) --> Resource Manager , Node Manager.
+	   
+Yarn (MR version 2) : cluster management.
+MR runs on top of Yarn.
+hadoop support : 1.6 & above.
 
-to start /stop services.
-/opt/hadoop/sbin
-$ stop-yarn.sh
-$ stop-dfs.sh
+Master daemon :
+HDFS : Name node.
+Yarn : Resource manager.
 
-stops:
-stop-dfs.sh
-stop-yarn.sh
-
-jps : to get the list of running services.
-
-commands:
-vi index1.txt
-<enter statement>
-esc + :wq
-
-hdfs dfs -mkdir /my_storage
-hdfs dfs -put index1.txt /my_storage
-
-hdfs dfs -ls /my_storage/
-hdfs dfs -cat /my_storage/index1.txt
-hdfs dfs -help
-
- hadoop jar MapReduce.jar MarketRatings /my_storage/farm-market-data.csv /home/hadoop/output2
- 
- hadoop jar hbase.jar CreateTable 
- 
- hdfs://192.168.12.46:9000/home/hadoop/output
- 
- 
- 
- Map Reduce:
- master : Jobtracker
- Slave : TaskTracker.
- 
- 
+Slave Daemon:
+HDFS : data node.
+Yarn : node manager.
 
 
-	  
+From master node, 
+ping dn1, dn2 should work
+nslookup dn1 : give iP address of dn1.
+
+
+
+DNS setup:
+In Name Node :
+In etc/hosts : entry should be present for all data nodes & name nodes.
+a) <name node IP> dn1 <fully qualified name URL>
+b) Data node
+c) client
+d) secondary name node.
+
+Note: fully qualified name can be taken command : hostname
+
+
+JPS : java Process monitor.
+
+Configuration files.
+a) 
+
+
+default block size : 128 MB
+replication : 3
+
+i) core-site.xml: need to define where master hdfs is running\
+<configuration>
+<name>fs.DefaultFs</name>
+<value>hdfs://<Name node IP>:8020<Value>
+<configuration>
+
+ii) hdfs-site.xml  :  a) define where we have to start meta data info b) data node data will be residing (all the blocks will be residing here) c) replication.
+
+	<configuration>
+
+	<property>
+		<name>dfs.namenode.name.dir</name>
+		<value>file:<name node directory path></value>
+	</property>
+
+	<property>
+		<name>dfs.datanode.name.dir</name>
+		<value>file:<data node directory path></value>
+	</property> 
+
+	</configuration>
+
+both directory to be created in name node.
+mkdir -p /home...
+
+give permission:
+chmod 755 <path>
+
+iii) mapred-site.xml  :  what framework to be used for mapreducing.
+
+	<configuration>
+		<name>mapreduce.framework.name</name>
+		<value>yarn</value>
+	<configuration>
+
+
+iv) Yarn-site.xml
+
+v) all the modified xml files to be copied to all the slave nodes. so that same configuration can be applied in slave nodes as well.
+
+vi) data node directry path to be created in all the data nodes.as we mentioned in hdfs-site.xml (<name>dfs.datanode.name.dir</name>)
+mkdir -p <path>
+chmode 755 <path>
+
+
+Edit slave files on master:
+==========================
+hadoop/slaves : in this file all the slave node entries to be added.
+
+<ip address of all the slave nodes>
+
+
+Format name node & start all the services:
+==========================================
+
+name node : hdfs namenode -format
+  
+
+start instances :
+================
+
+name node: start-dfs.sh
+
+JPS : to see the status.
+
+start data node : hadoop-daemon.sh start datanode
+JSP
+
+similarly start all the data node.
+
+name node : start-yarn.sh 
+
+hdfs://localhost:9000
+
+
+---------------------------------------------------------
+Name Node  
+RAM 64 GB
+hard disk : 1 TB.
+
+Secondary name node:
+RAM 32 GB
+hard disk : 1 TB.
+
+Data node:
+
+RAM 16 GB
+hard disk : 12 TB.
+
+important configuration parameters:
+===================================
+a) Name node IP (core_site.xml)
+b) block size  (hdfs_site.xml)
+c) Replication factor.
+d) name node directories
+e) data node directories
+f) edit logs.
+g) name node / data node ULR + Port.
+h) overriding parameters at run time.
+i) checkpoint (secondary name node)
+
+Access hadoop in IE.
+give ULR of data node. 
