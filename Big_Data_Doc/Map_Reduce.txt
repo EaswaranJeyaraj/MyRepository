@@ -11,7 +11,7 @@ Map Reduce:
  input -> spliting --> mapping --> shuffling --> reducing (sorting) --> output (list)
       --> words   --> key/value ->          --> word count         --> word: count    
 
- Map : spliting + mapping
+ Map : splitting + mapping
      reduce : shuffling + reducing.
 	 
 	 
@@ -51,6 +51,12 @@ hdfs dfs -help
  192.168.12.46
  hdfs://192.168.12.46:9000/home/hadoop/output
  
+ 192.168.11.193
+ root
+ mundio123
+ 
+ hadoop
+ hadoop
  
  
  Map Reduce:

@@ -1,4 +1,4 @@
-Spark :
+Spark : does not use map-reduce & bye pass the map reduce.
 ======
 
 proces live streaming data. but hadoop will process only batch (history) data.

@@ -12,6 +12,10 @@ Yarn : Yet another resource negotiator (map reduce version 2) : used for schedul
 Map reduce : helps java programmers for parallel computation of data using key/value. map task converts data into data set. which can be computed in key/value pair.
 
 
+Hadoop cluster: is a collection of independent components connected through a dedicated network to work as a single centralized data processing resource. “
+
+Hadoop (storage + Processing)  : is an application helping us to store & process the data.
+
 mapping (a,1) --> Splitting --> shuffling --> Reducing.
 
 
@@ -100,7 +104,8 @@ list 'table1'
  
 
  
-Cluster : physical grouping of server
+Cluster (physical grouping of server) :  cluster is a collection of various computers that work collectively as a single system
+
 Oracle virtual box manager.
 ================================
 spark :  Bye pass the mapreduce.
@@ -385,7 +390,7 @@ mkdir -p /home...
 give permission:
 chmod 755 <path>
 
-iii) mapred-site.xml  :  what framework to be used for mapreducing.
+iii) mapred-site.xml  :  what framework to be used for mapreducing. Running mapreduce on top of yarn is what mentioned.
 
 	<configuration>
 		<name>mapreduce.framework.name</name>
@@ -460,3 +465,79 @@ i) checkpoint (secondary name node)
 
 Access hadoop in IE.
 give ULR of data node. 
+
+
+------------------------------------
+multi node cluster:
+
+
+
+Master daemon :
+
+HDFS - Namenode.
+YARN : Resource Manager
+
+Slave:
+HDFS -- Data node
+yarn : node manager.
+
+
+
+OS version command:
+cat /etc/*ease*
+
+a) all ping should working for name node , data node...
+
+if ping not works..
+
+make entries in host file : 
+vi /etc/hosts
+<ip address> <name> <fully qualified name>
+
+Note : fully qualified name can be taken by executing this command : hostname
+
+a i)  Password less login through SSH. (nodes can communicate each other without prompting for a password)
+
+
+
+b)  verify java version across all the nodes.
+
+c) create soft link to point out the newer  hadoop version
+   ln -s hadoop2.7.1 hadoop 
+   
+   later if you want to point to some other version... then use the same command  & give the newer version.
+
+
+d) Configuration check.
+  > cd /etc/hadoop
+  > ls -l core-site.xml hdfs-site.xml mapred-site.xml.template yarn-site.xml  
+  > create directories where to store the data in master/data node.
+  > give write access to both the directories : chmod 755
+  > mapred --> map-red.template.
+  > 
+
+ e) create folder directories in name node & data node.. & give write access  : chmod 755
+ 
+ f) add slave ip entires in ect/slave file.
+ 
+ g)  move all the configuration files into slave nodes.
+ 
+ h) formating name node : to create node entries, tables,..
+     hdfs namenode -format
+	 
+	response : storage directory has been successfully formated.
+	 	 
+ i) start all the instances.	 
+   i) start-dfs.sh
+   ii) start-yarn.sh
+   iii) 
+ 
+
+
+
+ 
+ 
+ 
+ 
+
+
