@@ -1,0 +1,392 @@
+Ambari: 
+	is a console application for provisioning,managing & monitor hadoop cluster.
+It consist list of REST API browser based management interface.
+
+
+2 components:
+a) ambari server  (master process communicates with ambari agent)
+b) ambari agents (runs in all the hosts, each agent periodically sends health status & metric info).
+
+
+https://www.edupristine.com/blog/hadoop-installation-using-ambari
+
+https://www.youtube.com/watch?v=wHaVBoLwzwU
+
+
+Master node IP : 192.168.13.82    easwaran/123456   :  chennai.vectone.com
+
+Slave IP : 192.168.11.193  root/mundio123     hadoop/hadoop  : india-133.squay.com
+
+192.168.13.82 chennai.vectone.com node1
+192.168.11.193 india-133.squay.com node2
+
+
+Terminal:
+=========
+a) ssh-keygen
+   following files will be generated under /.ssh folder.
+   i) id_rsa  (private key)
+   ii) id_rsa.pub (public key)
+
+b) create & copy the public key & give permission.
+   i) cp id_rsa.pub authorized_keys 
+  ii) chmod 600 authorized_keys
+
+c) move the 'authorized_keys' file into target linux system under root/.ssh folder.
+
+post that target system can be accessed without prompting password.
+  ex : ssh root@<IP>  
+
+
+repos:
+i) ambari , hdp, hdp_util
+
+stop firewall:
+systemctl stop firewall
+
+
+ssh root@india-133.squay.com
+
+ssh hadoop@india-133.squay.com
+
+which java : command to get java home path.
+
+https://www.youtube.com/watch?v=f9Yw-czkaKg
+
+a) sudo wget http://public-repo-1.hortonworks.com/ambari/centos7-ppc/2.x/updates/2.6.0.0/ambari.repo -O /etc/yum.repos.d/ambari.repo
+
+sudo wget -nv http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.4.3.0/ambari.repo -O /etc/yum.repos.d/ambari.repo
+b) yum repolist
+c) sudo yum install -y ambari-server
+d) 
+
+sudo yum install ambari
+
+
+HDP : harton works distribution of hadoop.
+
+
+
+
+Slave IP : 192.168.11.193  root/mundio123     hadoop/hadoop  : india-133.squay.com
+
+
+ssh chennai.vectone.com “systemctl stop firewalld”
+
+ssh 192.168.11.193 “systemctl stop firewalld”
+
+
+http://hortonworks129.rssing.com/chan-52247624/all_p2.html
+============================================================
+wget http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.1.1/ambari-2.1.1-centos7.tar.gz
+wget http://public-repo-1.hortonworks.com/HDP/centos7/2.x/updates/2.3.0.0/HDP-2.3.0.0-centos7-rpm.tar.gz
+wget http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/centos7/HDP-UTILS-1.1.0.20-centos7.tar.gz
+
+
+export JAVA_HOME=/usr/bin/java/jdk.1.8.0_151/
+export PATH=$PATH:$JAVA_HOME/bin
+
+
+tar -xzvf ambari-2.1.1-centos7.tar.gz -C /var/www/html/
+tar -zxvf HDP-2.3.0.0-centos7-rpm.tar.gz -C /var/www/html
+tar -zxvf HDP-UTILS-1.1.0.20-centos7.tar.gz -C /var/www/html
+
+sudo cat CentOS-Base.repo
+sudo vim ambari.repo
+
+ambari-server setup –j /usr/java/bin/default
+
+http://hortonworks69.rssing.com/chan-30456327/all_p60.html
+sudo wget http://public-repo-1.hortonworks.com/ARTIFACTS/jdk-7u67-linux-x64.tar.gz 
+
+tar -xzvf jdk-7u67-linux-x64.tar.gz -C /usr/java
+
+/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.161-0.b14.el7_4.x86_64
+
+alternatives –remove jre_openjdk /usr/lib/jvm/jre-1.7.0-openjdk.x86_64/bin/java PATH TO THE OPEN JDK
+
+alternatives –remove /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.65-3.b17.el7.x86_64/jre/bin/java
+tar -xzvf jdk-7u67-linux-x64.gz -C /usr/java/
+
+alternatives
+sudo date
+java installation.
+
+
+export JAVA_HOME=/usr/java/jdk1.7.0_67/
+export PATH=$PATH:$JAVA_HOME/bin
+
+http://chennai.vectone.com:8080/#/login
+
+yum list | grep ambari-agent
+
+hbase password: hbase@123
+Grafana : grafana@123
+
+
+
+oozie : oozie@123
+
+actvity analysis : admin@123
+
+systemctl stop firewalld
+
+
+ambari-server setup -j /usr/java/default
+
+Pending:
+=======
+Services network restart
+Disable the firewall
+
+cd /etc/yum.repos.d/
+for i in master slave1 slave2
+Set Up the Ambari Server
+
+
+-------------------------------
+
+
+Admin Name : admin
+
+Cluster Name : BigdataCluster
+
+Total Hosts : 2 (2 new)
+
+Repositories:
+
+    redhat7 (HDP-2.6):
+    http://public-repo-1.hortonworks.com/HDP/centos7/2.x/updates/2.6.3.0
+
+    redhat7 (HDP-UTILS-1.1.0.21):
+    http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.21/repos/centos7
+
+Services:
+
+    HDFS
+        DataNode : 2 hosts
+        NameNode : chennai.vectone.com
+        NFSGateway : 0 host
+        SNameNode : chennai.vectone.com
+    YARN + MapReduce2
+        App Timeline Server : india-133.squay.com
+        NodeManager : 1 host
+        ResourceManager : chennai.vectone.com
+    Tez
+        Clients : 2 hosts
+    Hive
+        Metastore : india-133.squay.com
+        HiveServer2 : india-133.squay.com
+        WebHCat Server : india-133.squay.com
+        Database : New MySQL Database
+    HBase
+        Master : india-133.squay.com
+        RegionServer : 1 host
+        Phoenix Query Server : 1 host
+    Pig
+        Clients : 2 hosts
+    Sqoop
+        Clients : 2 hosts
+    ZooKeeper
+        Server : 2 hosts
+    Flume
+        Flume : 1 host
+    Ambari Infra
+        Infra Solr Instance : india-133.squay.com
+    Ambari Metrics
+        Metrics Collector : india-133.squay.com
+        Grafana : india-133.squay.com
+    Kafka
+        Broker : chennai.vectone.com
+    SmartSense
+        Activity Analyzer : india-133.squay.com
+        Activity Explorer : india-133.squay.com
+        HST Server : india-133.squay.com
+    Spark
+        Livy Server : 0 host
+        History Server : india-133.squay.com
+        Thrift Server : 0 host
+    Spark2
+        Livy for Spark2 Server : 0 host
+        History Server : india-133.squay.com
+        Thrift Server : 0 host
+    Slider
+        Clients : 2 hosts
+
+
+-----------------------------------------------------
+hdfs://chennai.vectone.com:8020/apps/hbase/data
+hdfs://chennai.vectone.com:8020/apps/hbase/data
+
+Error 	Ambari Metrics 	hbase.rootdir 	file:///var/lib/ambari-metrics-collector/hbase 	
+
+No disk info found on host india-133.squay.com
+
+Ambari Metrics service uses HBase as default storage backend. Set the rootdir for HBase to either local filesystem path if using Ambari Metrics in embedded mode or to a HDFS dir, example: hdfs://namenode.example.org:8020/amshbase.
+
+
+----------------------------------------------------------------------
+
+Steps:
+
+a) Verfify the existence of java in our machine & remove unwanted jdks.
+	1. alternatives -display java
+	2. alternatives -remove java /usr/lib/jvm/jre-1.7.0-openjdk.x86_64/bin/java
+
+b) Installation of Java :
+   1. mkdir /usr/java
+   2. URL :  http://hortonworks69.rssing.com/chan-30456327/all_p60.html
+   3. Commands
+	sudo wget http://public-repo-1.hortonworks.com/ARTIFACTS/jdk-7u67-linux-x64.tar.gz 
+	tar -xzvf jdk-7u67-linux-x64.tar.gz -C /usr/java
+c)  Class path setting.
+  1. vim /etc/profile 
+  2. Update the below entries
+	export JAVA_HOME=/usr/java/jdk1.8.0_45/
+	export PATH=$PATH:$JAVA_HOME/bin		
+
+ Note: Do the same accross all the nodes.
+
+d) Create user account.
+   useradd hadoop
+   passwd hadoop
+
+e) Configuring Key based login.
+
+    1. Master:
+
+	ssh-keygen    (.ssh folder will be created in master along with private key (id_rsa) & public key file)
+	ssh slave1.mundio.net "mkdir /root/.ssh"
+	ssh slave2.mundio.net "mkdir /root/.ssh"
+
+   cat id_rsa.pub >> authorized_keys      (copy file into authorized_keys)
+   scp /root/.ssh/authorized_keys root@slave1.mundio.net://root/.ssh
+   scp /root/.ssh/authorized_keys root@slave2.mundio.net://root/.ssh
+
+  2. Slave1 (node1)
+	 ssh-keygen
+	 cd .ssh
+	 cat id_rsa.pub >> authorized_keys
+
+	scp /root/.ssh/authorized_keys root@master.mundio.net://root/.ssh
+	scp /root/.ssh/authorized_keys root@slave2.mundio.net://root/.ssh
+
+Note: Repeat the steps accross all the nodes & system should allow to access wihtout prompting passoword.
+ex:
+  ssh root@node1.com
+  ssh root@node2.com
+
+f) Add host name in host files.
+
+   execute the below command in all the nodes to get the host names.
+
+ command:   hostname
+
+ vi /etc/hosts  (add the below entries)
+
+	192.168.13.82 chennai.vectone.com node1
+	192.168.11.193 india-133.squay.com node2
+
+h) Setting Up a Local Repository  (doubt)
+
+	Let’s install httpd to configure the web repositories
+
+	Yum search httpd
+	Yum install httpd
+	
+	If you get an error please add below entry in centos /etc/yum.repos.d/
+	gpgcheck =0
+
+  & to Services network restart
+	service httpd status
+	service httpd start
+
+i) Disable the firewall
+
+	Run the below command on all the nodes
+
+	systemctl stop firewall
+	ssh node2 “systemctl stop firewalld”
+
+j) Download the Ambari Repository
+
+	1. http://hortonworks129.rssing.com/chan-52247624/all_p2.html
+
+	wget http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.1.1/ambari-2.1.1-centos7.tar.gz
+	wget http://public-repo-1.hortonworks.com/HDP/centos7/2.x/updates/2.3.0.0/HDP-2.3.0.0-centos7-rpm.tar.gz
+	wget http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/centos7/HDP-UTILS-1.1.0.20-centos7.tar.gz
+
+	2. Extract the downloaded tar.gz files:
+		tar -xzvf ambari-2.2.2.0-centos6.tar.gz -C /var/www/html/
+		tar –zxvf HDP-2.4.2.0-centos6-rpm.tar.gz –C /var/www/html
+		tar –zxvf HDP-UTILS-1.1.0.20-centos6.tar.gz –C /var/www/html
+
+k) Preparing the Ambari Repository Configuration File
+
+	cd /etc/yum.repos.d/
+	download ambari.repo file & place here
+
+l) Installing Ambari.
+	1. Start ambari installation
+          yum install ambari-server
+
+	2. Set selinux to disabled in all the nodes
+		vi /etc/selinux/config
+		Change the SELINUX=enforcing to disabled
+
+	============================================
+
+	for i in master slave1 slave2 slave3 slave4 ; do ssh $i "selinux";done
+	Repeat the above step in all the nodes
+	======================================
+
+m) Set Up the Ambari Server
+	Setup configures Ambari to talk to the Ambari database, installs the JDK and allows you to customize the user
+	account the Ambari Server daemon will run as.
+	For Java:
+	ambari-server setup -j /usr/java/default
+	For postgres
+	ambari-server setup -jdbc-db=postgres --jdbc-driver=/usr/share/java/postgresql-jdbc.jar
+
+n) Start the Ambari Server
+	1. Run the following command on the Ambari Server host:
+		ambari-server start
+	2. To check the Ambari Server processes:
+		ambari-server status
+	3. To stop the Ambari Server:
+		ambari-server stop 
+
+o) Log In to Apache Ambari
+	After starting the Ambari service, open Ambari Web using a web browser.
+		http://master.mundio.com:8080/#/login
+
+	Note: Log in to the Ambari Server using the default user name/password: admin/admin.
+
+p) Launching the Ambari Install Wizard
+From the Ambari Welcome page, choose Launch Install Wizard
+Name Your Cluster: BigdataCluster
+The UI displays repository Base URLs based on Operating System Family (OS Family). Be sure to set the correct
+OS Family based on the Operating System you are running.
+Change the repositories. Get them from hdp.repo. Enter the list of hostnames (Fully qualified domain names)
+and then copy the /root/.ssh/id_rsa in the ambari-server machine
+Confirm Hosts
+Confirm Hosts prompts you to confirm that Ambari has located the correct hosts for your cluster and to check
+those hosts to make sure they have the correct directories, packages, and processes required to continue the
+install
+Choose Services
+You may choose to install any other available services now. The install wizard selects all available services for
+installation by default.
+1. Choose none to clear all selections, or choose all to select all listed services.
+2. Choose or clear individual checkboxes to define a set of services to install now.
+3. After selecting the services to install now, choose Next.
+Assign Masters
+The Ambari install wizard assigns the master components for selected services to appropriate hosts in
+your cluster and displays the assignments in Assign Masters. The left column shows services and current
+hosts. The right column shows current master component assignments by host, indicating the number of
+CPU cores and amount of RAM installed on each host.
+1. To change the host assignment for a service, select a host name from the drop-down menu for that
+service.
+2. To remove a ZooKeeper instance, click the green minus icon next to the host address you want to
+remove.
+3. When you are satisfied with the assignments, choose Next
+
