@@ -390,3 +390,12 @@ service.
 remove.
 3. When you are satisfied with the assignments, choose Next
 
+
+
+-----------------------------
+a) Centos to be installed with same version
+b) IC to be same.
+c) Bit should be same.
+d) 
+
+
