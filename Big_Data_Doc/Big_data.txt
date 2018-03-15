@@ -533,6 +533,51 @@ d) Configuration check.
    iii) 
  
 
+Master consist:
+a) mapreduce (job tracker)
+b) hdfs (name node , secondary name node)
+
+slave:
+a) task tracker
+b) data node.
+
+
+Master (job tracker) --> slave (task tracker)
+Master (name node) --> slave (data node)
+
+
+3 importants of hadoop:
+======================
+a) More data leads to more accurate analysis
+b) more accurate analysis leads to better decision making.
+c) better decision making leads to , greater operational efficiencies, cost reduction,reduce risk.
+
+
+Hadoop core componets:
+a) hdfs  (name node , data node)
+    i) responsible for distributing the data accross multip nodes.
+    ii) recovery of nodes.
+  
+b) map reduce (distributed programming framework).
+	Computation is done at the location of the data , rather than moving the data to the compute location . so that Map reduce need not to take care of network bandwidth & other constraint while processing.
+     
+map job: takes collection of data & convert into another set of data where individual data elements are broken into key/value pair.
+reduce job : takes map job output convert those key/value pair into smaller key/value pairs.
+
+add
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
  

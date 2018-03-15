@@ -228,8 +228,13 @@ Winscp --> File zilla.
 
 
 
+https://oscar.vectone.com/owa/auth/logon.aspx
+j.easwaran@vectone.com
+Welcome#123
+
+https://mail-delta.squay.com/owa/auth/logon.aspx 
  
- 
+
 
 
 
