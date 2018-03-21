@@ -1,7 +1,7 @@
 Spark : does not use map-reduce & bye pass the map reduce.
 ======
 
-proces live streaming data. but hadoop will process only batch (history) data.
+proces live streaming data. but map-reduce will process only batch (history) data.
 
 
 https://www.youtube.com/watch?v=9mELEARcxJo
@@ -45,7 +45,8 @@ Spark Context :
 memory : RAM
 Disk : space.
 
-RDD : (Resilient (Reliable) distributed data set)
+RDD : (Resilient (Reliable) distributed data set) : fundamental data structure of spark. immutable distributed collection of objects.
+
 3 node (RAM) data combinedly sitting in one memory is called RDD.
 Distributed data which sitting in memory in different node.
  
@@ -60,8 +61,8 @@ Distributed data which sitting in memory in different node.
  
  various combination:
  a) spark + hdfs
- b) spark + map reduce.
- c) spark + yarn.
+ b) spark + map reduce + HDFS	.
+ c) spark + yarn + HDFS.
  d) standalone spark.
  
  ------------------------------------
@@ -217,9 +218,53 @@ JavaPairDStream<String, Integer> wordCounts = pairs.reduceByKey((i1, i2) -> i1 +
 // Print the first ten elements of each RDD generated in this DStream to the console
 wordCounts.print();
 
-
---------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 from beginning : means whatever message we have produced from beginning.
 
 https://www.youtube.com/watch?v=J9UINMLbNxU
+
+Spark uses master/slave architecture i.e. one central coordinator and many distributed workers.
+Here, the central coordinator is called the driver
+
+Driver runs it's own java process.These drivers (master) communicate with distributed workers (executors- slave) & each executor is a separate process.
+
+Spark application : combination of driver & executors. with the help of cluster manager, spark application launched across all the machines.
+
+Standalone cluster manager : inbuilt cluster manager of spark. But spark also works with other cluster mangers like hadoop yarn..
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  Master (Driver)
+  Worker (Executor)
+
+
+	Driver --> Cluster Manager -->  Executor1 , Executer2 ...
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  Spark :  Cluster computing technology. working based on hadoop map reduce. main feature of spark is In-Memory cluster computation that increases the processing speed.
+
+ It supports mapreduce, sql queries , streaming , ML (machine learning)
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

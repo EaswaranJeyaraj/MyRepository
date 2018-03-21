@@ -44,7 +44,6 @@ i) ambari , hdp, hdp_util
 stop firewall:
 systemctl stop firewall
 
-
 ssh root@india-133.squay.com
 
 ssh hadoop@india-133.squay.com
@@ -65,9 +64,6 @@ sudo yum install ambari
 
 HDP : harton works distribution of hadoop.
 
-
-
-
 Slave IP : 192.168.11.193  root/mundio123     hadoop/hadoop  : india-133.squay.com
 
 
@@ -85,7 +81,6 @@ wget http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/centos7/HDP-U
 
 export JAVA_HOME=/usr/bin/java/jdk.1.8.0_151/
 export PATH=$PATH:$JAVA_HOME/bin
-
 
 tar -xzvf ambari-2.1.1-centos7.tar.gz -C /var/www/html/
 tar -zxvf HDP-2.3.0.0-centos7-rpm.tar.gz -C /var/www/html

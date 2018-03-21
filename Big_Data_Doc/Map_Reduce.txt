@@ -62,3 +62,9 @@ hdfs dfs -help
  Map Reduce:
  master : Jobtracker
  Slave : TaskTracker.
+
+Mapreduce implements various algorithm to divide into small parts & assign them into multiple system.
+
+
+
+
