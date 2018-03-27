@@ -6,15 +6,13 @@ Map Reduce:
  Map output : intermediate out put (saved in local disk)
   
  map reduce run on top of yarn.
-  
-  
+   
  input -> spliting --> mapping --> shuffling --> reducing (sorting) --> output (list)
       --> words   --> key/value ->          --> word count         --> word: count    
 
  Map : splitting + mapping
      reduce : shuffling + reducing.
-	 
-	 
+	 	 
 To stop all hadoop instances run the below commands:
 
 installation path :
@@ -64,6 +62,8 @@ hdfs dfs -help
  Slave : TaskTracker.
 
 Mapreduce implements various algorithm to divide into small parts & assign them into multiple system.
+
+mapping --> splitting --> shuffling -->  Reducing.
 
 
 

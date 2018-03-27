@@ -22,6 +22,14 @@ mapping (a,1) --> Splitting --> shuffling --> Reducing.
 mapper : The mapper processes the data and creates several small chunks of data
 
 
+Hadoop Components:
+=================
+a) Hadoop Common : set of utilities and libraries that are used by other modules.
+b) HDFS : default big data storage is HDFS. HDFS components create replicates & data blocks.
+c) Map Reduce : Distributed data processing framework
+d) Yarn : Dynamic resource utilization (need not to worry about increaing work loads)  - Resource/Node manager.
+
+
 SSH installation :
 used to interact with master / slaves computer without promting for username & password. Before create hadoop users in master & slaves.
 # useradd hadoop  

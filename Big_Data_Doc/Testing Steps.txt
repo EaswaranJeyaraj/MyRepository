@@ -25,6 +25,12 @@ http://10.22.3.12/Hadoop/Rulebackend.git
 http://10.22.3.12/Hadoop/Rulecreator.git
 http://10.22.3.12/Hadoop/Droolsrule.git
 
+http://git.mundio.com/Hadoop/Droolsrule.git
+http://git.mundio.com/Hadoop/Rulebackend.git
+http://git.mundio.com/Hadoop/Rulecreator.git
+http://git.mundio.com/Hadoop/Droolsrule.git
+
+
 
 
 Bitbucket credentials:
