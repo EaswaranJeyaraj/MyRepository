@@ -1,3 +1,6 @@
+outlook:
+https://oscar.vectone.com/owa/auth/logon.aspx
+
 mailChimp:
 https://mailchimp.com/
 j.easwaran@vectone.com
@@ -17,7 +20,6 @@ http://git.mundio.com/Hadoop/droolsmodeltest.git
 j.easwaran@vectone.com 
 12Asdfgh
 
-
 below git path to be used in 15 server:
 http://10.22.3.12/Hadoop/droolsmodeltest.git
 
@@ -29,9 +31,7 @@ http://git.mundio.com/Hadoop/Droolsrule.git
 http://git.mundio.com/Hadoop/Rulebackend.git
 http://git.mundio.com/Hadoop/Rulecreator.git
 http://git.mundio.com/Hadoop/Droolsrule.git
-
-
-
+http://git.mundio.com/Hadoop/marketingautomation.git
 
 Bitbucket credentials:
 ======================
@@ -230,10 +230,6 @@ class path :                C:\RuleEditorBackend\rulecreator\target\classes\com\
 drl generation path : C:/RuleEditorBackend/droolsrule/src/main/resources/rules/
 
 Winscp --> File zilla.
-
-
-
-
 
 https://mail-delta.squay.com/owa/auth/logon.aspx 
  

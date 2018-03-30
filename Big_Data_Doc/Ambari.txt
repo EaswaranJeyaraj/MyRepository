@@ -216,7 +216,6 @@ No disk info found on host india-133.squay.com
 
 Ambari Metrics service uses HBase as default storage backend. Set the rootdir for HBase to either local filesystem path if using Ambari Metrics in embedded mode or to a HDFS dir, example: hdfs://namenode.example.org:8020/amshbase.
 
-
 ----------------------------------------------------------------------
 
 Steps:
@@ -390,10 +389,5 @@ c) Bit should be same.
 d) 
 
 
-
-
-  
-
-
-
+Granfana: Provides powerful and customizable dashboard builder.
 
