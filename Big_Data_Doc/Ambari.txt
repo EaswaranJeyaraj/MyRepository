@@ -15,7 +15,7 @@ https://www.youtube.com/watch?v=wHaVBoLwzwU
 
 Master node IP : 192.168.13.82    easwaran/123456   :  chennai.vectone.com
 
-Slave IP : 192.168.11.193  root/mundio123     hadoop/hadoop  : india-133.squay.com
+
 
 192.168.11.73 chennai.vectone.com node1
 192.168.11.193 india-133.squay.com node2
@@ -216,6 +216,28 @@ No disk info found on host india-133.squay.com
 
 Ambari Metrics service uses HBase as default storage backend. Set the rootdir for HBase to either local filesystem path if using Ambari Metrics in embedded mode or to a HDFS dir, example: hdfs://namenode.example.org:8020/amshbase.
 
+
+==============================================================================================================
+
+Java Installation.:
+
+cd /opt/
+wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/jdk-8u161-linux-x64.tar.gz"
+tar xzf jdk-8u161-linux-x64.tar.gz
+
+cd /opt/jdk1.8.0_161/
+alternatives --install /usr/bin/java java /opt/jdk1.8.0_161/bin/java 2
+alternatives --config java
+choose option 1.
+
+alternatives --install /usr/bin/jar jar /opt/jdk1.8.0_161/bin/jar 2
+alternatives --install /usr/bin/javac javac /opt/jdk1.8.0_161/bin/javac 2
+alternatives --set jar /opt/jdk1.8.0_161/bin/jar
+alternatives --set javac /opt/jdk1.8.0_161/bin/javac
+
+==============================================================================================================
+
+
 ----------------------------------------------------------------------
 
 Steps:
@@ -231,9 +253,10 @@ b) Installation of Java :
 	sudo wget http://public-repo-1.hortonworks.com/ARTIFACTS/jdk-7u67-linux-x64.tar.gz 
 	tar -xzvf jdk-7u67-linux-x64.tar.gz -C /usr/java
 c)  Class path setting.
-  1. vim /etc/profile 
+
+  1. gedit /etc/profile 
   2. Update the below entries
-	export JAVA_HOME=/usr/java/jdk1.8.0_45/
+	export JAVA_HOME=/usr/java/1.8.0_65/
 	export PATH=$PATH:$JAVA_HOME/bin		
 
  Note: Do the same accross all the nodes.
@@ -246,13 +269,15 @@ e) Configuring Key based login.
 
     1. Master:
 
-	ssh-keygen    (.ssh folder will be created in master along with private key (id_rsa) & public key file)
+	ssh-keygen  (.ssh folder will be created in master along with private key (id_rsa) & public key file)
 	ssh slave1.mundio.net "mkdir /root/.ssh"
 	ssh slave2.mundio.net "mkdir /root/.ssh"
 
    cat id_rsa.pub >> authorized_keys      (copy file into authorized_keys)
    scp /root/.ssh/authorized_keys root@slave1.mundio.net://root/.ssh
    scp /root/.ssh/authorized_keys root@slave2.mundio.net://root/.ssh
+
+scp /root/.ssh/authorized_keys root@192.168.13.85://root/.ssh
 
   2. Slave1 (node1)
 	 ssh-keygen
@@ -276,14 +301,14 @@ f) Add host name in host files.
  vi /etc/hosts  (add the below entries)
 
 	192.168.13.82 chennai.vectone.com node1
-	192.168.11.193 india-133.squay.com node2
+	192.168.11.193 india-133.squay.com master
 
 h) Setting Up a Local Repository  (doubt)
 
 	Let’s install httpd to configure the web repositories
 
-	Yum search httpd
-	Yum install httpd
+	yum search httpd
+	yum install httpd
 	
 	If you get an error please add below entry in centos /etc/yum.repos.d/
 	gpgcheck =0
@@ -297,7 +322,9 @@ i) Disable the firewall
 	Run the below command on all the nodes
 
 	systemctl stop firewall
-	ssh node2 “systemctl stop firewalld”
+	ssh master “systemctl stop firewalld”
+
+i1) create hadoop user & generate key & add it with authorized_keys of (root)
 
 j) Download the Ambari Repository
 
@@ -308,11 +335,13 @@ j) Download the Ambari Repository
 	wget http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/centos7/HDP-UTILS-1.1.0.20-centos7.tar.gz
 
 	2. Extract the downloaded tar.gz files:
-		tar -xzvf ambari-2.2.2.0-centos6.tar.gz -C /var/www/html/
-		tar –zxvf HDP-2.4.2.0-centos6-rpm.tar.gz –C /var/www/html
-		tar –zxvf HDP-UTILS-1.1.0.20-centos6.tar.gz –C /var/www/html
-
+		sudo tar -xzvf ambari-2.1.1-centos7.tar.gz -C /var/www/html/
+		sudo tar -xzvf HDP-2.3.0.0-centos7-rpm.tar.gz -C /var/www/html/
+		sudo tar -xzvf HDP-UTILS-1.1.0.20-centos7.tar.gz -C /var/www/html/
+		
 k) Preparing the Ambari Repository Configuration File
+
+wget -nv http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.6.0.0/ambari.repo -O /etc/yum.repos.d/ambari.repo
 
 	cd /etc/yum.repos.d/
 	download ambari.repo file & place here
@@ -325,7 +354,9 @@ l) Installing Ambari.
 		vi /etc/selinux/config
 		Change the SELINUX=enforcing to disabled
 
-	============================================
+SELINUX=disabled
+
+============================================
 
 	for i in master slave1 slave2 slave3 slave4 ; do ssh $i "selinux";done
 	Repeat the above step in all the nodes
@@ -335,9 +366,14 @@ m) Set Up the Ambari Server
 	Setup configures Ambari to talk to the Ambari database, installs the JDK and allows you to customize the user
 	account the Ambari Server daemon will run as.
 	For Java:
-	ambari-server setup -j /usr/java/default
+
+	ambari-server setup -j /opt/jdk1.8.0_161
+
 	For postgres
 	ambari-server setup -jdbc-db=postgres --jdbc-driver=/usr/share/java/postgresql-jdbc.jar
+
+	
+
 
 n) Start the Ambari Server
 	1. Run the following command on the Ambari Server host:
@@ -349,11 +385,121 @@ n) Start the Ambari Server
 
 o) Log In to Apache Ambari
 	After starting the Ambari service, open Ambari Web using a web browser.
-		http://master.mundio.com:8080/#/login
+		http://india-133.squay.com:8080/#/login
+
+
+http://master.mundio.com:8080/#/login
+http://india-133.squay.com:8080/#/login
 
 	Note: Log in to the Ambari Server using the default user name/password: admin/admin.
 
+ambari server logs:
+cat /var/log/ambari-server/ambari-server.log
+
 p) Launching the Ambari Install Wizard
+
+q) Passwords:
+    1. Hive 
+     database password : database@123
+
+   2. Ambari Metrics 
+      Grafana Admin : grafana@123
+
+   3. Smark sense
+      Activity Analysis : admin@123
+
+
+Admin Name : admin
+
+Cluster Name : DevCluster
+
+Total Hosts : 1 (1 new)
+
+Repositories:
+
+    redhat7 (HDP-2.6):
+    http://public-repo-1.hortonworks.com/HDP/centos7/2.x/updates/2.6.3.0
+
+    redhat7 (HDP-UTILS-1.1.0.21):
+    http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.21/repos/centos7
+
+Services:
+
+    HDFS
+        DataNode : 1 host
+        NameNode : india-133.squay.com
+        NFSGateway : 0 host
+        SNameNode : india-133.squay.com
+    YARN + MapReduce2
+        App Timeline Server : india-133.squay.com
+        NodeManager : 1 host
+        ResourceManager : india-133.squay.com
+    Tez
+        Clients : 1 host
+    Hive
+        Metastore : india-133.squay.com
+        HiveServer2 : india-133.squay.com
+        WebHCat Server : india-133.squay.com
+        Database : New MySQL Database
+    HBase
+        Master : india-133.squay.com
+        RegionServer : 1 host
+        Phoenix Query Server : 0 host
+    Pig
+        Clients : 1 host
+    Sqoop
+        Clients : 1 host
+    ZooKeeper
+        Server : india-133.squay.com
+    Flume
+        Flume : 1 host
+    Ambari Infra
+        Infra Solr Instance : india-133.squay.com
+    Ambari Metrics
+        Metrics Collector : india-133.squay.com
+        Grafana : india-133.squay.com
+    Kafka
+        Broker : india-133.squay.com
+    SmartSense
+        Activity Analyzer : india-133.squay.com
+        Activity Explorer : india-133.squay.com
+        HST Server : india-133.squay.com
+    Spark
+        Livy Server : 0 host
+        History Server : india-133.squay.com
+        Thrift Server : 0 host
+    Spark2
+        Livy for Spark2 Server : 0 host
+        History Server : india-133.squay.com
+        Thrift Server : 0 host
+    Slider
+        Clients : 1 host
+
+=====================================================================
+
+Summary :
+=========
+
+The cluster consists of 1 hosts
+
+    Installed and started services successfully on 1 new host
+
+Master services installed
+
+    NameNode installed on india-133.squay.com
+    SNameNode installed on india-133.squay.com
+    ResourceManager installed on india-133.squay.com
+    History Server installed on india-133.squay.com
+    HiveServer2 installed on india-133.squay.com
+    HBase Master installed on india-133.squay.com
+
+All services started
+
+All tests passed
+
+Install and start completed in 79 minutes and 58 seconds
+
+
 
 From the Ambari Welcome page, choose Launch Install Wizard
 Name Your Cluster: BigdataCluster
@@ -382,12 +528,9 @@ service.
 remove.
 3. When you are satisfied with the assignments, choose Next
 
-----------------------------
-a) Centos to be installed with same version
-b) IC to be same.
-c) Bit should be same.
-d) 
 
 
-Granfana: Provides powerful and customizable dashboard builder.
+
+
+
 
