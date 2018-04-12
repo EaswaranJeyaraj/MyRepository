@@ -63,7 +63,7 @@ sudo yum install ambari
 
 HDP : harton works distribution of hadoop.
 
-Slave IP : 192.168.11.193  root/mundio123     hadoop/hadoop  : india-133.squay.com
+Slave IP : 192.168.11.193  root/mundio123  hadoop/hadoop  : india-133.squay.com
 
 ssh chennai.vectone.com “systemctl stop firewalld”
 
@@ -527,6 +527,97 @@ service.
 2. To remove a ZooKeeper instance, click the green minus icon next to the host address you want to
 remove.
 3. When you are satisfied with the assignments, choose Next
+
+--------------------------------------------------------------------------------
+
+kafka --> spark --> rule engine
+
+http://india-133.squay.com:6667
+https://www.youtube.com/watch?v=uIAeGufvSXA
+
+------------------------------------------------------------------------------------------------------
+
+Class path setting:
+
+
+export ZOOKEEPER_HOME=/usr/hdp/2.6.3.0-235/zookeeper
+
+
+#SPARK ECOSYSTEMS
+export KAFKA_HOME=/usr/hdp/2.6.3.0-235/kafka
+
+------------------------------------------------------------------------------------------------------------
+
+Topic Creation:
+
+cd /bin
+cat kafka
+export KAFKA_HOME=/usr/hdp/2.6.3.0-235/kafka
+export ZOOKEEPER_HOME=/usr/hdp/2.6.3.0-235/zookeeper
+
+Starting Zookeeper:
+/usr/hdp/2.6.3.0-235/kafka/bin/kafka-server-start.sh /usr/hdp/2.6.3.0-235/kafka/config/server.properties 
+
+Starting Zookeeper Client in 2181 port:
+/usr/hdp/2.6.3.0-235/zookeeper/bin/zkCli.sh start india-133.squay.com:2181
+
+
+Creating Topics:
+
+/usr/hdp/2.6.3.0-235/kafka/bin/kafka-topics.sh --create --zookeeper india-133.squay.com:2181 --replication-factor 1  --partitions 1 --topic eventtopic
+
+/usr/hdp/2.6.3.0-235/kafka/bin/kafka-topics.sh --create --zookeeper india-133.squay.com:2181 --replication-factor 1  --partitions 1 --topic notifytopic
+
+
+List Topics:
+/usr/hdp/2.6.3.0-235/kafka/bin/kafka-topics.sh --list --zookeeper india-133.squay.com:2181
+
+
+start producer:
+/usr/hdp/2.6.3.0-235/kafka/bin/kafka-console-producer.sh --broker-list india-133.squay.com:6667 --topic eventtopic
+
+send message from producer.
+
+start consumer :
+/usr/hdp/2.6.3.0-235/kafka/bin/kafka-console-consumer.sh --zookeeper india-133.squay.com:2181 --topic eventtopic --from-beginning   
+consumer will recieve message from producer.
+		  
+
+/usr/hdp/2.6.3.0-235/kafka/bin/kafka-console-consumer.sh --zookeeper india-133.squay.com:2181 --topic eventtopic --from-beginning 
+
+/usr/hdp/2.6.3.0-235/kafka/bin/kafka-console-consumer.sh --zookeeper india-133.squay.com:2181 192.168.11.193:6667 --topic eventtopic --from-beginning   
+
+/usr/hdp/2.6.3.0-235/kafka/bin/kafka-console-consumer.sh --zookeeper localhost:2181  --bootstrap-server localhost:6667 --topic eventtopic --from-beginning
+
+bin/kafka-console-consumer.sh --zookeeper 10.22.3.70:2181 --bootstrap-server 10.22.3.70:6667 --topic bundlenotify --from-beginning
+
+eventtopic key message1
+
+------------------------------------------------------------
+
+Kafka Producer URL :
+http://192.168.11.193:8511/producer/send
+
+
+Change content type in REST Client:
+Header --> custom Header
+name : Content-Type
+Value : application/json
+URL : http://192.168.13.85:8080/producer/send
+method : Post.
+
+------------------------------------------------------------------------------------------------------------------------
+Maven:
+
+export M2_HOME=/home/hadoop/Easwar/Soft/maven
+export PATH=${M2_HOME}/bin:${PATH}
+
+/home/hadoop/IdeaProjects/target/kafkaproducer-1.0-SNAPSHOT.jar
+
+scp target/kafkaproducer-1.0-SNAPSHOT.jar hadoop@192.168.11.193:Soft/KafkaProducer
+
+------------------------------------------------------------------------------------------------------------------------
+
 
 
 

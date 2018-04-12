@@ -44,10 +44,11 @@ kafka is giving 100% Reliability not loose any data.with max parallelism.
 kafka : acknowledgement mode / no acknowledgement mode.
 
 messaging server is called as kafka broker.
-Producer any application (developed by any language) pusing messages to kafka broker.
-consumer : consumeing messages from kafka brokers
-topic : categrization of storage. unique name will be giving to different type of messages. i will store this type of messages only this partion.
-& consumer wil receive this type of messages.
+
+Producer any application (developed by any language) pushing messages to kafka broker.
+consumer : consuming messages from kafka brokers
+topic : categrization of storage. unique name will be giving to different type of messages. it will store this type of messages only this partition.
+& consumer will receive this type of messages. each topic should have atleast one parition.
 
 partion : topic splited into partion (file), which are replicated. immutable   of messages constantly appended.
 
@@ -66,6 +67,7 @@ if N number of partions & N number of brokers then each broker wil have one part
 if N number of partions & N + 1  number of brokers then each broker wil have one partion & nth + 1 broker wont have any partion.
 if N+1 number of partions & N number of brokers then each broker wil have one partion & some of the brokers may have multiple partions.
 
+Broker can have multiple partition. But partion cant associate with multiple brokers.
 
 offset : unique Id associated with every message.
 
@@ -81,3 +83,7 @@ broker leader election will be conducted by zoo keeper.
 
 
 https://www.youtube.com/watch?v=4Vr2Xtm5lDw
+
+https://hortonworks.com/tutorial/kafka-in-trucking-iot-on-hdf/section/3/
+
+
