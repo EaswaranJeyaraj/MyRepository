@@ -566,8 +566,13 @@ Creating Topics:
 
 /usr/hdp/2.6.3.0-235/kafka/bin/kafka-topics.sh --create --zookeeper india-133.squay.com:2181 --replication-factor 1  --partitions 1 --topic eventtopic
 
-/usr/hdp/2.6.3.0-235/kafka/bin/kafka-topics.sh --create --zookeeper india-133.squay.com:2181 --replication-factor 1  --partitions 1 --topic notifytopic
+/usr/hdp/2.6.3.0-235/kafka/bin/kafka-topics.sh --create --zookeeper india-133.squay.com:2181 --replication-factor 1  --partitions 1 --topic bundlenotify
 
+
+/usr/hdp/2.6.3.0-235/kafka/bin/kafka-topics.sh --zookeeper india-133.squay.com:2181 --delete --topic bundlenotify hgpo.llo.prmt.processed 
+
+
+/usr/hdp/2.6.3.0-235/kafka/bin/kafka-topics.sh --zookeeper india-133.squay.com:2181 --disable --topic bundlenotify
 
 List Topics:
 /usr/hdp/2.6.3.0-235/kafka/bin/kafka-topics.sh --list --zookeeper india-133.squay.com:2181
@@ -581,17 +586,18 @@ send message from producer.
 start consumer :
 /usr/hdp/2.6.3.0-235/kafka/bin/kafka-console-consumer.sh --zookeeper india-133.squay.com:2181 --topic eventtopic --from-beginning   
 consumer will recieve message from producer.
-		  
+	
 
-/usr/hdp/2.6.3.0-235/kafka/bin/kafka-console-consumer.sh --zookeeper india-133.squay.com:2181 --topic eventtopic --from-beginning 
+/usr/hdp/2.6.3.0-235/kafka/bin/kafka-console-consumer.sh --zookeeper india-133.squay.com:2181 --topic bundlenotify --from-beginning   
+consumer will recieve message from producer.
 
-/usr/hdp/2.6.3.0-235/kafka/bin/kafka-console-consumer.sh --zookeeper india-133.squay.com:2181 192.168.11.193:6667 --topic eventtopic --from-beginning   
 
-/usr/hdp/2.6.3.0-235/kafka/bin/kafka-console-consumer.sh --zookeeper localhost:2181  --bootstrap-server localhost:6667 --topic eventtopic --from-beginning
+Start Consumers:
 
-bin/kafka-console-consumer.sh --zookeeper 10.22.3.70:2181 --bootstrap-server 10.22.3.70:6667 --topic bundlenotify --from-beginning
+/usr/hdp/2.6.3.0-235/kafka/bin/kafka-console-consumer.sh --zookeeper india-133.squay.com:2181 --topic eventtopic --from-beginning
 
-eventtopic key message1
+/usr/hdp/2.6.3.0-235/kafka/bin/kafka-console-consumer.sh --zookeeper india-133.squay.com:2181 --topic bundlenotify --from-beginning	  
+
 
 ------------------------------------------------------------
 
@@ -603,7 +609,8 @@ Change content type in REST Client:
 Header --> custom Header
 name : Content-Type
 Value : application/json
-URL : http://192.168.13.85:8080/producer/send
+URL : http://192.168.11.193:8511/producer/send
+
 method : Post.
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -618,7 +625,32 @@ scp target/kafkaproducer-1.0-SNAPSHOT.jar hadoop@192.168.11.193:Soft/KafkaProduc
 
 ------------------------------------------------------------------------------------------------------------------------
 
+Run Spark :
 
+/bin/spark-submit \
+  --class org.apache.spark.examples.SparkPi \
+  --master spark://207.184.161.138:7077 \
+  --executor-memory 20G \
+  --total-executor-cores 100 \
+  /path/to/examples.jar \
+  1000
+
+
+scp MarketingAutomation-assembly-1.0.jar hadoop@192.168.11.193:Soft/MarketingAutomation
+
+./bin/spark-submit --class com.mundio.mat.Driver --master yarn-client --deploy-mode client --num-executors 2 --driver-memory 1G --executor-memory 1G --executor-cores 1 Soft/MarketingAutomation/MarketingAutomation-assembly-1.0.jar 
+
+
+Issue : Multiple versions of Spark are installed but SPARK_MAJOR_VERSION is not set
+Spark1 will be picked by default
+
+Soln : export SPARK_MAJOR_VERSION=2
+
+Issue : org.apache.hadoop.security.AccessControlException: Permission denied: user=hadoop, access=WRITE, inode="/user/hadoop/.sparkStaging/application_1522837242746_0008":hdfs:hdfs:drwxr-xr-x
+
+Soln : 
+sudo -u hdfs hadoop fs -mkdir /user/hadoop/.sparkStaging
+export HADOOP_USER_NAME=hdfs
 
 
 
