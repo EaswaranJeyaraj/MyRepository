@@ -13,7 +13,7 @@ SQL to hadoop & Hadoop to SQL.
 RDBMS <--> sqoop tool (import/export)  <--> hadoop 
 
 steps:
-a) sqoop send request to RDBS & get the metadata information.
+a) sqoop send request to RDBMS & get the metadata information.
 b) generate .java classes (since internally using jdbc api to generate data)
 c) package the compiled classes & generate jars.
 
@@ -32,8 +32,7 @@ sqoop,mysql connector.
 Rule_details_tbl
 
 		   
-sqoop eval \
-		--connect "jdbc:sqlserver://10.30.2.117;databaseName=MarketingAutomation;instanceName=development" \
+sqoop eval --connect "jdbc:sqlserver://10.30.2.117;databaseName=MarketingAutomation;instanceName=development" \
            --username nohuman  \
            --password nohumansql \
            --driver   com.microsoft.sqlserver.jdbc.SQLServerDriver \
@@ -210,4 +209,61 @@ create script (with .sh extension or .txt) & put any path.
 goto bin > /home/hadoop/script.sh	   
 	   
 =====================================================================================================================
+
+
+db:
+spring.datasource.url=jdbc:sqlserver://10.30.2.117;databaseName=MarketingAutomation;instanceName=development;
+spring.datasource.driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver
+spring.datasource.username=nohuman
+spring.datasource.password=nohumansql
+
+
+
+
+sqoop eval --connect "jdbc:sqlserver://10.30.2.117;databaseName=MarketingAutomation;instanceName=development" \
+           --username nohuman  \
+           --password nohumansql \
+           --driver   com.microsoft.sqlserver.jdbc.SQLServerDriver \
+           --query "select * from Job_Details_tbl where rule_name = 'MAgrtCZ';"
+
+
+sqoop eval --connect "jdbc:sqlserver://10.22.2.58;databaseName=esp_mcz" \
+           --username nohuman  \
+           --password nohumansql \
+           --driver   com.microsoft.sqlserver.jdbc.SQLServerDriver \
+           --query "select * from subscriber where subscriberid between 36480 and 36487;"
+
+
+sqoop eval --connect "jdbc:sqlserver://10.22.2.58;databaseName=esp_mcz" \
+           --username nohuman  \
+           --password nohumansql \
+           --driver   com.microsoft.sqlserver.jdbc.SQLServerDriver \
+           --query "select max(subscriberid),min(subscriberid),count(subscriberid) from subscriber where 1 = 1 ;"
+
+
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58:1433;database=esp_mcz" --username nohuman -P --table subscriber --hbase-table subscriber --hbase-create-table --column-family cfscrb --hbase-row-key subscriberid --last-value 36485 \
+-m 1
+
+
+sqoop import --connect "jdbc:sqlserver://10.22.2.58;databaseName=esp_mcz" \
+       --username nohuman \
+       --password nohumansql \
+       --driver   com.microsoft.sqlserver.jdbc.SQLServerDriver \
+       --table    "subscriber" \
+	  --hbase-table subscriber \
+	  --column-family 0 \
+	  --hbase-row-key subscriberid \
+	  --incremental append --check-column subscriberid --last-value 36485 \
+	   -m 1
+
+
+36480
+36487
+
+
+
+
+
+
 

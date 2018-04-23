@@ -115,8 +115,6 @@ yum list | grep ambari-agent
 hbase password: hbase@123
 Grafana : grafana@123
 
-
-
 oozie : oozie@123
 
 actvity analysis : admin@123
@@ -583,7 +581,7 @@ start producer:
 
 send message from producer.
 
-start consumer :
+start event topic consumer :
 /usr/hdp/2.6.3.0-235/kafka/bin/kafka-console-consumer.sh --zookeeper india-133.squay.com:2181 --topic eventtopic --from-beginning   
 consumer will recieve message from producer.
 	
@@ -604,6 +602,12 @@ Start Consumers:
 Kafka Producer URL :
 http://192.168.11.193:8511/producer/send
 
+
+	{
+  "topic":"eventtopic",
+  "key":"bundle_customer",
+  "message":"{\"bundleID\":12,\"actionType\":\"subscribebundle\",\"status\":1,\"mobileNo\":420794099805,\"mvbpStatus\":1,\"updateBy\":\"USSD\",\"currCode\":\"CZK\"}"
+}
 
 Change content type in REST Client:
 Header --> custom Header
@@ -652,8 +656,6 @@ Soln :
 sudo -u hdfs hadoop fs -mkdir /user/hadoop/.sparkStaging
 export HADOOP_USER_NAME=hdfs
 
-
-
-
+tsql –S Servername –U Username –D DBName
 
 
