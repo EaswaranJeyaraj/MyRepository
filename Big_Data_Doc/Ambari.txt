@@ -52,6 +52,7 @@ which java : command to get java home path.
 
 https://www.youtube.com/watch?v=f9Yw-czkaKg
 
+
 a) sudo wget http://public-repo-1.hortonworks.com/ambari/centos7-ppc/2.x/updates/2.6.0.0/ambari.repo -O /etc/yum.repos.d/ambari.repo
 
 sudo wget -nv http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.4.3.0/ambari.repo -O /etc/yum.repos.d/ambari.repo
@@ -642,7 +643,11 @@ Run Spark :
 
 scp MarketingAutomation-assembly-1.0.jar hadoop@192.168.11.193:Soft/MarketingAutomation
 
-./bin/spark-submit --class com.mundio.mat.Driver --master yarn-client --deploy-mode client --num-executors 2 --driver-memory 1G --executor-memory 1G --executor-cores 1 Soft/MarketingAutomation/MarketingAutomation-assembly-1.0.jar 
+/bin/spark-submit --class com.mundio.mat.Driver --master yarn-client --deploy-mode client --num-executors 2 --driver-memory 1G --executor-memory 1G --executor-cores 1 Soft/MarketingAutomation/MarketingAutomation-assembly-1.0.jar 
+
+
+ /bin/spark-submit --class com.mundio.mat.Driver --master yarn-client --deploy-mode client --conf "spark.executor.extraClassPath=/usr/hdp/current/hbase-client/conf/:/usr/hdp/current/phoenix-client/phoenix-4.7.0.2.5.0.0-1245-client.jar" --num-executors 2 --driver-memory 1G --executor-memory 1G --executor-cores 1 Soft/MarketingAutomation/MarketingAutomation-assembly-1.0.jar 
+
 
 
 Issue : Multiple versions of Spark are installed but SPARK_MAJOR_VERSION is not set
@@ -656,6 +661,23 @@ Soln :
 sudo -u hdfs hadoop fs -mkdir /user/hadoop/.sparkStaging
 export HADOOP_USER_NAME=hdfs
 
-tsql –S Servername –U Username –D DBName
+--------------------------------------------------------------------------------------------------------------------------
 
+Pending :
+a) phoenix.
+b) Foreach (spark)
+c) size / capacity configuration.
+d) .xml configuration.
+e) sqoop import complete definition.
+f) adding new node
+h) class path setting.
+i) connectivity between 2 cluster components (spark , hbase)
+j) configuration part.
+
+
+
+ SUBSCRIBID  | firstname  |  lastname  |           email            | activat |
++-------------+------------+------------+----------------------------+---------+
+| 34492       | Frantisek  | Dvorak     | francescodvorak@gmail.com  |         |
+| 999         | Milena     | Klatilova  | mrichterova@gmail.com      |     
 

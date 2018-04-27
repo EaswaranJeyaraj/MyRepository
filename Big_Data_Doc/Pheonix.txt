@@ -4,6 +4,13 @@ SQL layer on top of Hbase to support sql operation like CRUD. It translates SQL 
 
 Turn Hbase into SQL data base.
 
+
+3 components:
+a) Hbase master
+b) Hbase Region
+c) Zoo keeper
+
+
 110 N rows : 0.04 sec (7000 times faster)
 
 Fastest way to access Hbase. 
@@ -38,7 +45,6 @@ To start the using the below step
    bin/sqlline.py localhost
 
 For reference please check this url: https://phoenix.apache.org/installation.html
-
 
 
 List tables:
@@ -78,3 +84,17 @@ SELECT  PH.ID FROM TEST_PH PH , TEST_PH1 PH1 WHERE PH.ID = PH1.ID;
 SELECT  PH.ID FROM TEST_PH PH JOIN TEST_PH1 PH1 ON PH.ID = PH1.ID;
 
 ----------------------------------------------------------------------------------
+
+scp /root/.ssh/authorized_keys root@master.mundio.net://root/.ssh
+scp phoenix-4.7.0.2.5.0.0-1245-client.jar hadoop@192.168.11.193:///usr/hdp/2.6.3.0-235/hbase/lib/
+
+
+
+!connect jdbc:phoenix:10.22.3.70:2181:/hbase-unsecure
+
+!connect jdbc:phoenix:192.168.11.193:2181:/hbase-unsecure
+
+
+
+
+

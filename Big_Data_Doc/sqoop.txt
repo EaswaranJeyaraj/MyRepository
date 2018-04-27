@@ -258,12 +258,20 @@ sqoop import --connect "jdbc:sqlserver://10.22.2.58;databaseName=esp_mcz" \
 	   -m 1
 
 
-36480
-36487
 
 
 
 
+
+
+
+
+
+
+
+
+export SQOOP_HOME=/usr/hdp/2.6.3.0-235/kafka
+export SQOOP_BIN=SQOOP_HOME/bin
 
 
 

@@ -73,9 +73,9 @@ Distributed data which sitting in memory in different node.
  b) RDD filter = number.map("logic to find the values.")
  c) filter.collect  //Action.
  
-  Unless executing the action statement (c) ,data will not be loaded from F.txt file.
+Unless executing the action statement (c) ,data will not be loaded from F.txt file.
   
-  ------------------------------------
+------------------------------------
  
 Hadoop is one of the ways to implement spark.
 spark uses hadoop in 2 ways : 1) storage 2) processing.
@@ -154,7 +154,6 @@ card is been swiped in india  & with in hour  the same card is getting swiped in
 This is can be processed everytime the card is been used.this is process is called streaming.
 
 streaming sources : HDFS directories, kafka,tcp sockets, flume...
-
 
 kafka,flume ,twiter,hdfs --> streaming --> HDFS,databases 
 

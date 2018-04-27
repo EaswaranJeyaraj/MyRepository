@@ -28,12 +28,17 @@ b) versioning. (time stamp) , in get will get the fresh value (last modified), s
 default version : 1
 c) to drop the table, firt table to be disabled.
 
+
+
+Significance of Column Family:
+ HBase stores data in HDFS at $HBASE_HOME/TableName/regionId/ColumnFamily/HFiles.
+
 --------------------------------------------------------------------------------
 Installation Details:
 =====================
 
 Hbase Installation Details:
-Intallation details:
+Installation details:
 URL http://192.168.12.46:16010/
 
 Installed path: /home/hadoop/hbase
