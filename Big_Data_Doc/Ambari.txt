@@ -645,7 +645,7 @@ scp MarketingAutomation-assembly-1.0.jar hadoop@192.168.11.193:Soft/MarketingAut
 
 /bin/spark-submit --class com.mundio.mat.Driver --master yarn-client --deploy-mode client --num-executors 2 --driver-memory 1G --executor-memory 1G --executor-cores 1 Soft/MarketingAutomation/MarketingAutomation-assembly-1.0.jar 
 
-
+With Hbase:
  /bin/spark-submit --class com.mundio.mat.Driver --master yarn-client --deploy-mode client --conf "spark.executor.extraClassPath=/usr/hdp/current/hbase-client/conf/:/usr/hdp/current/phoenix-client/phoenix-4.7.0.2.5.0.0-1245-client.jar" --num-executors 2 --driver-memory 1G --executor-memory 1G --executor-cores 1 Soft/MarketingAutomation/MarketingAutomation-assembly-1.0.jar 
 
 
@@ -664,7 +664,6 @@ export HADOOP_USER_NAME=hdfs
 --------------------------------------------------------------------------------------------------------------------------
 
 Pending :
-a) phoenix.
 b) Foreach (spark)
 c) size / capacity configuration.
 d) .xml configuration.
@@ -673,6 +672,10 @@ f) adding new node
 h) class path setting.
 i) connectivity between 2 cluster components (spark , hbase)
 j) configuration part.
+k) change scala code to java.
+l) Y hbase is been used instead hive.
+j) Hive
+k) 
 
 
 
@@ -680,4 +683,15 @@ j) configuration part.
 +-------------+------------+------------+----------------------------+---------+
 | 34492       | Frantisek  | Dvorak     | francescodvorak@gmail.com  |         |
 | 999         | Milena     | Klatilova  | mrichterova@gmail.com      |     
+
+
+Adding new node with Cluster:
+============================
+a) Add host entry in /etc/hosts
+b) SSH key generation
+c) installed ntp (network Time Protocol) --> keep the same time in all the nodes.
+d) 
+
+
+
 
