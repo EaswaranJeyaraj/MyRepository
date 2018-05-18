@@ -1,0 +1,155 @@
+
+
+
+Scala : Pure object oriented language & functional programming language.
+
+General purpose programming language.it supports object oriented & funcational programming language.
+It does not have a concept called primitive.
+
+
+where to use scala:
+a) kafka streaming
+b) parallel processing
+c) web applicatin
+d) data anylysis with spark.
+e) 
+
+scala is compiled to run in JVM.
+
+scala is not extension of java. but while compiling , scala file translate into java byte code and runs in JVM.
+
+
+variable declartion:
+====================
+
+var number =100
+number = 200
+
+val number:Int = 100
+
+
+val number = 100
+    number = 200   //error
+
+=================================================================================================
+
+sample program:
+==============
+
+object test{
+
+	var number :Int = 100
+  def show(){
+	 if(number >=100)
+	 	println("number >=100")
+	 else
+		println("number <100")
+ }
+
+
+// Pattern matching.
+ def switch(){
+	var number = 1
+
+	number match{
+
+	case 1 =>println("ONE")
+	case 2 =>println("TWO")
+        case 3 =>println("Three")
+        case _ => println("Else")
+
+	}
+
+
+ }
+
+ def forLoop(){
+
+
+	//for( a <- 1 to 10 ){  
+        // println(a);  // 1,2,3....
+
+
+	//for( a <- 1 to 10 by 2 ){  
+        // println(a);   // 1,3,5...
+
+    for (a <- 1 until 10){
+	print(a)
+    }   // 1,2,...9
+    
+	for (a <- 1 until 20 if a%2==0){
+	print(a)
+
+    }  //2,4,6...10
+
+ }
+ 
+ def forEach(){
+     
+     var list = List(1,2,5,3,8,9)
+    
+    /* list.foreach{
+         println
+     }
+     */
+     
+    // list.foreach(print)
+    
+    var strlist = List("first","second","third")
+    strlist.foreach((element:String)=>println("element:"+element))
+     
+     
+ }
+
+
+ def main(arg:Array[String]){
+	println("Main")
+	//show()
+	//switch()
+	//forLoop()
+	forEach()
+ }
+
+}
+
+================================================================================================= 
+break statment:
+==============
+
+    import scala.util.control.Breaks._                  // Importing  package  
+    object MainObject {  
+       def main(args: Array[String]) {  
+            breakable {                                 // Breakable method to avoid exception  
+                for(i<-1 to 10 by 2){  
+                    if(i==7)   
+                        break                           // Break used here  
+                    else  
+                        println(i)  
+                }  
+            }  
+        }  
+    }  
+
+==================================================================================
+Argument with return type:
+=========================
+import scala.util.control.Breaks._                  // Importing  package  
+object test{
+
+def argmethod(a:Int,b:Int)={
+    var c = a+b
+    c
+}
+
+
+ def main(arg:Array[String]){
+
+	var result = argmethod(1,4)
+	print(result)
+ }
+
+}
+
+==================================================================================
+
+
