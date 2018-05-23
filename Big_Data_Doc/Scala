@@ -17,7 +17,7 @@ e)
 scala is compiled to run in JVM.
 
 scala is not extension of java. but while compiling , scala file translate into java byte code and runs in JVM.
-
+ 
 
 variable declartion:
 ====================
@@ -28,7 +28,7 @@ number = 200
 val number:Int = 100
 
 
-val number = 100
+val number = 100  // Constant initialization
     number = 200   //error
 
 =================================================================================================
@@ -151,5 +151,380 @@ def argmethod(a:Int,b:Int)={
 }
 
 ==================================================================================
+Anonymous function:
+It has no name. but it work as a function.
+
+ def main(arg:Array[String]){
+        
+      var result = (number1:Int,number2:Int) => number1+number2
+      println(result(3,4))
+      
+      var result2 = (_:Int) + (_:Int)
+      println(result2(5,6))
+      
+        
+    }
+
+==================================================================================
+scala function with variable length.
+
+    def add(args: Int*) = {  
+        var sum = 0;  
+        for(a <- args) sum+=a  
+        sum  
+    }  
+    var sum = add(1,2,3,4,5,6,7,8,9);  
+    println(sum);  
 
 
+==================================================================================
+
+ we must initialize all instance variable in the class.
+ default access specifier : public.
+ there must be an object in which main method is defined & it provies starting point to your program.
+ 
+
+class Student {
+    
+    var sno:Int = 12
+    var name:String = "TEST"
+    
+}
+
+object MainObject {
+    
+    def main(arg:Array[String]){
+        
+        var objStudent = new Student()
+        
+        println(objStudent.sno)
+        println(objStudent.name)
+        
+    }
+    
+}
+
+
+==================================================================================
+with constructor:
+
+class Student (sno:Int,name:String) {
+    
+    def show(){
+        println("SNO:"+sno)
+        println("Name:"+name)
+        
+    }
+    
+}
+
+object MainObject {
+    
+    def main(arg:Array[String]){
+        
+    var sno:Int = 12
+    var name:String = "TEST"
+        var objStudent = new Student(sno,name)
+        
+        objStudent.show()
+        
+    }
+    
+}
+
+==================================================================================
+
+Scala Singleton Object:
+=======================
+	is an object which is declared by using keyword object instead class. Need not to use new keyword to initialize object .
+
+Note: No static concepts in scala.
+
+
+object Singletonmain{
+    
+    def main(arg:Array[String]){
+        
+        SingleToneObject.show(12,13)
+        
+    }
+    
+}
+
+object SingleToneObject {
+    
+    
+    def show(a:Int,b:Int){
+        var result = a+b
+        println("result:"+result)
+        
+    }
+    
+}
+
+
+==================================================================================
+
+Case Classes : immutable, new keyword is not required to initalize object.
+
+    case class CaseClass(a:Int, b:Int)  
+      
+    object MainObject{  
+        def main(args:Array[String]){  
+            var c =  CaseClass(10,10)       // Creating object of case class  
+            println("a = "+c.a)               // Accessing elements of case class  
+            println("b = "+c.b)  
+        }  
+    }  
+
+
+
+==================================================================================
+primary constructor:
+
+class Student (id:Int,name:String){    // Primay construcotor
+     
+       var department:String = null
+       def show(){
+           
+           println("ID:"+id)
+           println("name:"+name)
+           println("department:"+department)
+           
+       }
+       
+       def this(id:Int,name:String,dep:String){  // Secondary construcotor
+           this(id,name)
+           department = dep
+           
+       }
+    
+    }  
+    
+    object MainObject {
+        
+        def main(arg:Array[String]){
+            
+            var objStudent = new Student(12,"first")
+             objStudent.show()
+             
+             println("After secondary call")
+             var objStudent1 = new Student(12,"first","CIVIL")
+             objStudent1.show()
+            
+        }
+        
+        
+    }
+
+
+==========================================================================
+Method overriding : override keyword should be used in child method.
+
+
+class Parent {
+    def method(){
+        println("Parent method")
+    }
+    
+}
+
+
+class Child extends Parent {
+    
+    override def method(){
+        println("Child method")
+    }
+}
+
+
+object MainObject{
+    def main(arg:Array[String]){
+    
+        var objChild = new Child()
+        objChild.method()
+    }
+    
+    
+}
+
+
+Note: 
+a) field overriding concept also there..  override keyword should be used in child fields not in the mothods.
+b) keyword val can be overriden & not var
+c) final keyword (val) variable / methods can not be overiden.
+d) final class can not be inherited.
+
+
+============================================================================
+
+Trait (Interface) : Like an interface.  all behaviour same. but trait can have abstract as well as non-abstract methods.
+variables : var / val : if not initialized will be considered abstract.
+
+trait mixins:
+============
+ A class can implement with n number of trait with class / abstract class. Implmentation order should be like this.
+
+  class extends <class> with trait1, trait2....
+
+=================================================================================
+
+
+Access Modifier:
+============== 
+ a) no modifier (public)
+ b) Proetected
+ c) Private
+
+====================================================================================
+
+Array:
+
+ object MainObject{  
+        def main(args:Array[String]){  
+            
+            //var arr = Array(1,2,3,4,5,6)
+            var arr = new Array[Int](5)
+
+	/** var arr = new Array[Int](2,2)  Multi dimensional array
+              arr  = Array(Array(1,2),Array(4,5))
+ 	**/	
+
+            arr = Array(1,2,3,4,5,6,7)    // u can give values more than array length.
+            
+            
+            //for (a <- arr)
+            //println(a)
+            
+            arr.foreach((element:Int) => println(element))
+              
+        }  
+    }  
+
+
+
+--------------------------
+
+ object MainObject{  
+        def main(args:Array[String]){  
+            
+            var arr = Array(Array(1,2),Array(4,5))
+            
+            for(a <- 0 to 1)
+            for(b <- 0 to 1)
+            println(arr(a)(b))
+            
+           
+              
+        }  
+    }  
+=========================================================================================	
+String : both equals or ==  compare strings.
+
+String interpolation: Allows to pass variable with the string without using '+' operator.
+
+var str = 3.12
+
+println(s"value is $str")  -->  value is 3.12  
+
+=========================================================================================	
+
+Exception:
+
+ try{
+            var s = 12/0
+          }
+          catch{
+              case e:ArithmeticException => println("Exception occured .."+e)
+              
+          }
+
+
+throws:
+class ExceptionExample4{  
+    @throws(classOf[NumberFormatException])
+
+===========================================================================================
+Collections:
+============
+
+a) import Scala.collection.mutable (add/modify/remove)
+b) import Scala.collection.immutable (can not modify)
+
+Set : no duplicates
+
+
+
+  var varSet:Set[String] = Set("test1","test2","test1","test4")
+          //print(varSet)
+          
+          /**
+            for(element <- varSet)
+          println(element)
+          
+          println(varSet.head)
+          println(varSet.tail)
+          println(varSet.isEmpty)
+          
+        **/
+        var varSet1:Set[String] = Set("test5","test6","test1","test8")
+         
+          //var varSet3:Set[String] = varSet ++ varSet1  //Merge
+          
+          var varSet3:Set[String] = varSet.union(varSet1)  //Merge
+          var varSet4:Set[String] = varSet.intersect(varSet1)   // matching (common) elements
+          
+          println(varSet4)
+          println()
+          
+          varSet3 = varSet3 + "test9"  //Add
+          varSet3 = varSet3 - "test8"  //Remove
+          
+          //println(varSet3)
+          
+          varSet3.foreach((element:String)=>println(element))
+          
+          //Sorted Map
+          var sortNumbers:SortedSet[Int] = SortedSet(3,4,2,1,6,0)
+          
+          sortNumbers.foreach((element:Int) => println(element))
+
+
+
+==========================================================================================
+
+Seq : same like list. but element can be access by passing seq
+
+        var seq:Seq[Int] = Seq(52,85,1,8,3,2,7)  
+        println(seq(2))  
+
+
+==========================================================================================
+var hashmap = HashMap("A"->"First","B"->"Second","C"->"Third")
+           
+           hashmap.foreach{
+               case(key,value) => println(key + ":"+value)
+               
+           }
+
+
+==========================================================================================
+Tuple: like  list but can store any type of data.
+
+
+        var tupleValues = (1,2.5,"India")  
+
+        tupleValues.productIterator.foreach(println)    // Iterating tuple values using productIterator  
+ 	println(tupleValues._1) // Fetching first value  
+        println(tupleValues._2) // Fetching second value  
+
+
+==========================================================================================
+
+
+
+
+
+
+
+ 
