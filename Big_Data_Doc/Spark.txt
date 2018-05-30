@@ -6,6 +6,8 @@ proces live streaming data. but map-reduce will process only batch (history) dat
 
 https://www.youtube.com/watch?v=9mELEARcxJo
 
+Mapper --> Shuffle --> Sort --> Reduce.
+
 Mapper:
   (a,1)
   (a,1)
@@ -173,12 +175,14 @@ a) basic sources : file system , socket connection.
 b) advance sources : kafka , flume.
 
 output operation : post stream , data can be stored as file , db,objects,
-foreachRDD one of the output operation.
+foreachRDD one of the output operations.
   
 spark streaming : extension of core spark API.
 processing live streaming of data.
 
-concepts: a) Transformation (creating new Dstream) b)output operation (baches).
+concepts: 
+a) Transformation (creating new Dstream)
+b) output operation (batches).
 
 Stock price --> kafka messaging service --> spark streaming --> HDFS sink  --> HDFS storage. 
 

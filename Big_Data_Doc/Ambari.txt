@@ -55,7 +55,7 @@ https://www.youtube.com/watch?v=f9Yw-czkaKg
 
 a) sudo wget http://public-repo-1.hortonworks.com/ambari/centos7-ppc/2.x/updates/2.6.0.0/ambari.repo -O /etc/yum.repos.d/ambari.repo
 
-sudo wget -nv http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.4.3.0/ambari.repo -O /etc/yum.repos.d/ambari.repo
+                                                                                         
 b) yum repolist
 c) sudo yum install -y ambari-server
 d) 
@@ -586,7 +586,6 @@ start event topic consumer :
 /usr/hdp/2.6.3.0-235/kafka/bin/kafka-console-consumer.sh --zookeeper india-133.squay.com:2181 --topic eventtopic --from-beginning   
 consumer will recieve message from producer.
 	
-
 /usr/hdp/2.6.3.0-235/kafka/bin/kafka-console-consumer.sh --zookeeper india-133.squay.com:2181 --topic bundlenotify --from-beginning   
 consumer will recieve message from producer.
 
@@ -597,11 +596,10 @@ Start Consumers:
 
 /usr/hdp/2.6.3.0-235/kafka/bin/kafka-console-consumer.sh --zookeeper india-133.squay.com:2181 --topic bundlenotify --from-beginning	  
 
-
-------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 
 Kafka Producer URL :
-http://192.168.11.193:8511/producer/send
+http://192.168.12.59:8511/producer/send
 
 
 	{
@@ -655,7 +653,7 @@ Spark1 will be picked by default
 
 Soln : export SPARK_MAJOR_VERSION=2
 
-Issue : org.apache.hadoop.security.AccessControlException: Permission denied: user=hadoop, access=WRITE, inode="/user/hadoop/.sparkStaging/application_1522837242746_0008":hdfs:hdfs:drwxr-xr-x
+	/application_1522837242746_0008":hdfs:hdfs:drwxr-xr-x
 
 Soln : 
 sudo -u hdfs hadoop fs -mkdir /user/hadoop/.sparkStaging
@@ -667,22 +665,19 @@ Pending :
 b) Foreach (spark)
 c) size / capacity configuration.
 d) .xml configuration.
-e) sqoop import complete definition.
-f) adding new node
 h) class path setting.
 i) connectivity between 2 cluster components (spark , hbase)
-j) configuration part.
+j) configuration part / file path.
 k) change scala code to java.
 l) Y hbase is been used instead hive.
-j) Hive
-k) 
+j) Hive (sql)
+k) adding new node in the cluster (components to be selected)
+l) flume (messaging system)
 
-
-
- SUBSCRIBID  | firstname  |  lastname  |           email            | activat |
+                  
 +-------------+------------+------------+----------------------------+---------+
 | 34492       | Frantisek  | Dvorak     | francescodvorak@gmail.com  |         |
-| 999         | Milena     | Klatilova  | mrichterova@gmail.com      |     
+| 999         | Milena     | Klatilova  | mrichterova@gmail.com      |      
 
 
 Adding new node with Cluster:
@@ -691,6 +686,16 @@ a) Add host entry in /etc/hosts
 b) SSH key generation
 c) installed ntp (network Time Protocol) --> keep the same time in all the nodes.
 d) 
+
+HOSTNAME
+
+192.168.12.59 india-133.squay.com master 
+
+
+
+
+
+
 
 
 
