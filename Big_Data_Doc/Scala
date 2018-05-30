@@ -1,10 +1,16 @@
 
-
-
-Scala : Pure object oriented language & functional programming language.
+Scala (Scalable language) : Pure object oriented language & functional programming language.
 
 General purpose programming language.it supports object oriented & funcational programming language.
 It does not have a concept called primitive.
+
+
+advantages:
+elegant(short) : code length is less.
+type-safe 
+easy to interact with java code.
+java code also can be writen in scala.
+suitable for parallel processing.
 
 
 where to use scala:
@@ -59,7 +65,6 @@ object test{
         case _ => println("Else")
 
 	}
-
 
  }
 
@@ -273,7 +278,7 @@ Case Classes : immutable, new keyword is not required to initialize object.
 ==================================================================================
 primary constructor:
 
-class Student (id:Int,name:String){    // Primay construcotor
+class Student (id:Int,name:String){    // Primary construcotor
      
        var department:String = null
        def show(){
@@ -284,7 +289,7 @@ class Student (id:Int,name:String){    // Primay construcotor
            
        }
        
-       def this(id:Int,name:String,dep:String){  // Secondary construcotor
+       def this(id:Int,name:String,dep:String){  // Secondary constructor
            this(id,name)
            department = dep
            
@@ -480,12 +485,6 @@ var hashmap = HashMap("A"->"First","B"->"Second","C"->"Third")
            }
 
 
- var hashmap = HashMap("A"->"First","B"->"Second","C"->"Third")   
-     
-     hashmap.foreach{
-         case(key,value) => println(key + " : "+ value)
-         
-     }
 ==========================================================================================
 
 Tuple: like  list but can store any type of data.
