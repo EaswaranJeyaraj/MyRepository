@@ -1,15 +1,15 @@
 Hbase: (Desinged to provide quick random access to huge amount of strcutured data.)
- ======
+=====
  
  Hbase:  
- distributed column-oriented database built on top of the HDFS. It is an open-source project and is horizontally scalable.
+ distributed column-oriented no sql database built on top of the HDFS. It is an open-source project and is horizontally scalable.
  
  Table : Collection of rows
  Row : collction of column family.
  Column family : collection of column
  Column : Key (rowkey) /value (column values) pair.
  
- zoo keeper : maintains config information.
+ zoo keeper : maintain config & metadata information.
   
  
  http://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-hs/HistoryServerRest.html
@@ -27,7 +27,6 @@ a) If column value is null, then space will not be allocated.
 b) versioning. (time stamp) , in get will get the fresh value (last modified), scan : get all the version values.
 default version : 1
 c) to drop the table, firt table to be disabled.
-
 
 
 Significance of Column Family:
@@ -94,6 +93,44 @@ versioning
 			 			
 
 hbase shell commands : https://www.youtube.com/watch?v=m1jjMBpS6Hs			
-			 
+		
+=============================================================================
+Architecture of Hbase
+
+Client  --> zoo Keeper --> Hbase (Master , Region server1, region server2, ..) --> Hadoop HDFS 
+
+
+
+1. What is S3?	 
+   Simple Storage service, one of the file systems used by hbase.
+
+2. What is the reason of using HBase?
+   It provides read/write operations & we can perform n number of operation per second in a large data sets.
+
+3. Modes of Hbase
+    a)Standalone(default mode) : not use HDFS, use local file systems.
+    b)Distributed : use hdfs
+
+4. Most common file sytem of Hbase
+    HDFS
+
+5. Which code is used to open the connection in Hbase
+	Configuration myConf = HBaseConfiguration.create();
+	HTableInterface usersTable = new HTable(myConf, “users”);
+
+6. What are the fundamental key structures of HBase?
+	row key and column key
+
+7. hbase shell 
+	Java API to communicate with Hbase.
+
+8. 
+
+
+
+
+
+
+
 
 			 

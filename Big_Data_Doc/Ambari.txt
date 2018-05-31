@@ -404,7 +404,7 @@ q) Passwords:
    2. Ambari Metrics 
       Grafana Admin : grafana@123
 
-   3. Smark sense
+   3. Smart sense
       Activity Analysis : admin@123
 
 
@@ -691,11 +691,39 @@ HOSTNAME
 
 192.168.12.59 india-133.squay.com master 
 
+========================================================================================
+
+version : 2.5.2
+
+1. Repository:
+    is a space where it host the s/w packages which can be used for download & install.
+
+2. Yum : is a package manager, which actually fetches the s/w  packages from the repository.
+
+3. Local repository :  hosted space in local environment. when the machine dont have active internet connection , the local repository will be setup & the user will be able to obtain ambari & other hadoop s/w packages from local.
+
+4. Types of Ambari repostories: 
+    a) Ambari
+    b) Hadoop
+    c) Hadoop utils
+    d) EPEL (Extra packages for Enterprise Linux)
+
+5. Tools needed to build Ambari
+   a) JDK
+   b) Maven 3.3.9/later
+
+6. Life cycle of Ambari
+   Install, start , install , configure , stop
+
+7. 
+
+                       
+
+ 
 
 
 
-
-
+   
 
 
 
