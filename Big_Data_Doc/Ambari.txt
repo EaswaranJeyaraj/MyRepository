@@ -722,7 +722,47 @@ version : 2.5.2
 Ambari :
 =========
 
+1. What is Ambari ?
 
+a) is a console application for provisioning,managing & monitor hadoop cluster.
+It consist list of REST API browser based management interface
+b) is host where all the softwares which are required for hadoop cluster can be installed
+
+
+2.  Area where Ambari helps.
+     Provisioning , managing, monitoring
+
+3. YUM 
+   It is a package manager & It fetches software packages from repository
+
+4. Local Repository :
+
+	Hosted space in our local environment. when the machine doesnt have internet connection.. then ambari refer the paackages from local repository.
+
+5. Types of repositories
+
+    a) Ambari  (ambari & agents & other software monitoring packages)
+    b) Hadoop 
+    c) hadoop Util
+
+6. Tool needed to build ambari
+
+   a) JDK (1.7) or later
+   b) APache maven 3.3.9 or later.
+
+7. advantages of ambari
+
+   a) Installation  is simplified
+   b) configration and overall management is simplified
+   c) Give full visibility in terms of Cluster health
+   d) Extensively extendable.
+   e) centralized security setup.
+
+8. Ambari life cycle commands 
+   ambari-server start , stop,status , install , configure
+
+
+9. 
 
  
 
